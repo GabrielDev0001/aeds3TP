@@ -1,4 +1,4 @@
-package Entidade;
+package Entidades;
 
 public class Episodio {
     private int id;
