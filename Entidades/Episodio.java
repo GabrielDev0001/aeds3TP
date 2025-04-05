@@ -3,16 +3,16 @@ package Entidades;
 public class Episodio {
     private int id;
     private String nome;
-    private String sinopse;
+    private String dataLancamento;
     private int duracao; 
-    private int temporadaId; 
+    private int temporada; 
 
-    public Episodio(int id, String nome, String sinopse, int duracao, int temporadaId) {
+    public Episodio(int id, String nome, String dataLancamento, int duracao, int temporada) {
         this.id = id;
         this.nome = nome;
-        this.sinopse = sinopse;
+        this.dataLancamento = dataLancamento;
         this.duracao = duracao;
-        this.temporadaId = temporadaId;
+        this.temporada = temporada;
     }
 
     public int getId() {
@@ -23,16 +23,16 @@ public class Episodio {
         return nome;
     }
 
-    public String getsinopse() {
-        return sinopse;
+    public String getdataLancamento() {
+        return dataLancamento;
     }
 
     public int getduracao() {
         return duracao;
     }
 
-    public int getTemporadaId() {
-        return temporadaId;
+    public int gettemporada() {
+        return temporada;
     }
     
 }
