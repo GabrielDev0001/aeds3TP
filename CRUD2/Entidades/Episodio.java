@@ -19,6 +19,10 @@ public class Episodio {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getnome() {
         return nome;
     }
