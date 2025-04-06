@@ -19,13 +19,13 @@ O PUCFlix permite operações de **CRUD** (Criar, Ler, Atualizar e Excluir) tant
 
 ## 🗂️ Estrutura do Projeto
 
-### 📁 Modelos (model)
+### 📁 Modelos (Entidade)
 - **Serie.java**: Classe que define a entidade série, com os atributos:
   - id, nome, anoLancamento, sinopse, streaming
 - **Episodio.java**: Classe que define a entidade episódio, com os atributos:
   - id, idSerie, nome, temporada, dataLancamento, duracao
 
-### 📁 Visão (view)
+### 📁 Visão (Menu)
 - **VisaoSeries.java**: Métodos para leitura e apresentação de séries:
   - `Serie leSerie()`: Lê os dados de uma série inseridos pelo usuário.
   - `void mostraSerie(Serie s)`: Exibe as informações de uma série.
