@@ -1,5 +1,6 @@
 package Arquivo;
 import Entidades.Episodio;
+import Menu.ParaNomeID;
 import aed3.*;
 import java.util.ArrayList;
 
@@ -54,7 +55,7 @@ public class ArquivoEpisodios extends Arquivo<Episodio> {
             Episodio[] episodios = new Episodio[docs.size()];
             int i = 0;
             for(ParaNomeID doc: docs) {
-                episodios[i++] = read(doc.getId);
+                episodios[i++] = read(doc.getId());
             }
             return episodios;
         }
@@ -90,7 +91,7 @@ public class ArquivoEpisodios extends Arquivo<Episodio> {
     }
 
     public Episodio[] readEpisodiosSerie(int idSerie) throws Exception{
-        ArrayLis<ParaID> locs = indiceIndiretoIDEpisodio.read(new ParaID(idSerie, -1));
+        ArrayList<ParaID> locs = indiceIndiretoIDEpisodio.read(new ParaID(idSerie, -1));
 
         if (locs.size() > 0) {
             Episodio[] episodios = new Episodio[locs.size()];
@@ -110,7 +111,8 @@ public class ArquivoEpisodios extends Arquivo<Episodio> {
 
         if (e != null) {
             if (super.delete(id)) {
-                return indiceIndiretoIDEpisodio.delete(new ParaNomeID(e.getIDSerie(), id)) && indiceNomeEpisodio.delete(new ParaNomeID(e.getNome(), id));
+                return indiceIndiretoIDEpisodio.delete(new ParaID(e.getIDSerie(), id))
+                && indiceNomeEpisodio.delete(new ParaNomeID(e.getNome(), id));
             }
         }
     }
