@@ -14,7 +14,7 @@ public class MenuEpisodio {
     ArquivoSeries arqSeries;
     private static Scanner console = new Scanner(System.in);
 
-    public MenuClientes() throws Exception {
+    public MenuEpisodio() throws Exception {
         arqEp = new ArquivoEpisodios();
         arqSeries = new ArquivoSeries();
     }
@@ -39,8 +39,7 @@ public class MenuEpisodio {
             }
 
             switch(opcao) {
-                case 1: if(incluirEpisodio()) System.out.println("Episodio incluido com sucesso!");
-                    else System.out.println("Não foi possivel incluir este episódio.");
+                case 1: incluirEpisodio();
                     break;
                 case 2: buscarEpisodio();
                     break;
@@ -57,7 +56,47 @@ public class MenuEpisodio {
     }
 
     public boolean incluirEpisodio() {
+        System.out.println("\nInclusão de Episódio");
+        String nome = new String();
+        LocalDate dataLancamento = null;
+        boolean dadosCorretos = false;
+        int duracao;
+        int temporada;
+        float avaliacao;
 
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        do {
+            System.out.print("\nNome (min. de 4 letras ou vazio para cancelar): ");
+            nome = console.nextLine();
+            if(nome.length()==0)
+                return false;
+            if(nome.length()<4)
+                System.err.println("O nome o Episódio deve ter no mínimo 4 caracteres.");
+        } while(nome.length()<4);
+
+        do {
+            System.out.print("Data de lançamento (DD/MM/AAAA): ");
+            String dataStr = console.nextLine();
+            dadosCorretos = false;
+            try {
+                dataLancamento = LocalDate.parse(dataStr, formatter);
+                dadosCorretos = true;
+            } catch (Exception e) {
+                System.err.println("Data inválida! Use o formato DD/MM/AAAA.");
+            }
+        } while(!dadosCorretos);
+
+        System.out.println("Duração do episódio (em minutos): ");
+        duracao = console.nextInt();
+
+        System.out.println("Digite qual a temporada em que o episódio está inserido: ");
+        temporada = console.nextInt();
+
+        System.out.println("Digite a avaliação do episódio: ");
+        avaliacao = console.nextFloat();
+
+    }
     }
 
     public boolean excluirEpisodio(int idEP) {
@@ -69,6 +108,5 @@ public class MenuEpisodio {
     }
 
     public Episodio buscarEpisodio (String nome, String nomeSerie){
-
-    }
+        
 }
