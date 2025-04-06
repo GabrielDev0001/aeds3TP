@@ -3,16 +3,20 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 import Entidades.*;
+import Arquivo.ArquivoEpisodios;
+import Arquivo.ArquivoSeries;
 import java.time.format.DateTimeFormatter;
 import javax.sound.midi.Soundbank;
 
 
 public class MenuEpisodio {
-    ArquivoCliente arqClientes;
+    ArquivoEpisodios arqEp;
+    ArquivoSeries arqSeries;
     private static Scanner console = new Scanner(System.in);
 
     public MenuClientes() throws Exception {
-        arqClientes = new ArquivoCliente();
+        arqEp = new ArquivoEpisodios();
+        arqSeries = new ArquivoSeries();
     }
 
     public void menu() {
@@ -35,17 +39,14 @@ public class MenuEpisodio {
             }
 
             switch(opcao) {
-                case 1: incluirEpisodio();
+                case 1: if(incluirEpisodio()) System.out.println("Episodio incluido com sucesso!");
+                    else System.out.println("Não foi possivel incluir este episódio.");
                     break;
-                case 2: System.out.println("Digite o nome da série: "); 
-                    String nomeSerie = console.nextLine();
-                    System.out.println("Digite o nome do episódio: ");
-                    String nomeEpisodio = console.nextLine();
-                    buscarEpisodio(nomeEpisodio, nomeSerie);
+                case 2: buscarEpisodio();
                     break;
-                case 3:
+                case 3: alterarEpisodio();
                     break;
-                case 4:
+                case 4: excluirEpisodio();
                     break;
                 case 0:
                     break;
@@ -55,24 +56,7 @@ public class MenuEpisodio {
         } while (opcao != 0);
     }
 
-    public void incluirEpisodio() {
-        System.out.println("Incluir episódio: ");
-        String nomeEP = new String();
-        int temp = 0;
-        LocalDate dataLancamento = LocalDate.now();
-        int duracao = 0;
-        float avaliacao = 0F;
-        String sinopse = new String();
-        int idSerie = 0;
-
-        boolean dadosCorretos = false;
-        
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
-        do { 
-            System.out.println("Em que série você deseja inserir o episódio?");
-        } while (true);
-         
+    public boolean incluirEpisodio() {
 
     }
 
