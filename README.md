@@ -1,11 +1,73 @@
-GITHUB_AED3
+# 📺 PUCFlix 1.0
 
-Vocês devem postar o seu trabalho no GitHub e enviar apenas o URL do seu projeto. Criem um repositório específico para este projeto (ao invés de mandar o repositório pessoal de algum de vocês em que estejam todos os seus códigos). Acrescentem um arquivo readme.md ao projeto que será o relatório do trabalho de vocês. Nele, descrevam um pouco o esforço. Mesmo que eu tenha acabado de especificar, acima, o que eu gostaria que fosse feito, eu gostaria de ver a descrição do seu trabalho nas suas próprias palavras. Basicamente, vocês devem responder à seguinte pergunta: O que o trabalho de vocês faz?
+PUCFlix é um projeto desenvolvido como parte do Trabalho Prático 1 da disciplina de **Algoritmos e Estruturas de Dados 3 (AEDS 3)** na **PUC Minas**. O objetivo do sistema é gerenciar séries e episódios, utilizando estrutura de arquivos e índices com **Árvores B+** e **Tabela Hash Extensível** para garantir eficiência e organização.
 
-Em seguida, listem os nomes dos participantes e descrevam todas as classes criadas e os seus métodos principais. O objetivo é que vocês facilitem ao máximo a minha correção, de tal forma que eu possa entender com facilidade tudo aquilo que fizeram e dar uma nota justa.
+## ✅ Funcionalidades
 
-Finalmente, relatem um pouco a experiência de vocês, explicando questões como: Vocês implementaram todos os requisitos? Houve alguma operação mais difícil? Vocês enfrentaram algum desafio na implementação? Os resultados foram alcançados? ... A ideia, portanto, é relatar como foi a experiência de desenvolvimento do TP. Aqui, a ideia é entender como foi para vocês desenvolver este TP.
+O PUCFlix permite realizar operações de **CRUD** (Criar, Ler, Atualizar e Deletar) tanto para séries quanto para episódios. Cada série pode conter diversos episódios, enquanto cada episódio pertence exclusivamente a uma série, respeitando assim o relacionamento **1:N**.
 
-Para concluir, vocês devem, necessariamente, responder ao seguinte checklist (copie as perguntas abaixo para o seu relatório e responda sim/não em frente a elas):
+### Recursos adicionais
+- Garantia de integridade: séries que possuem episódios vinculados não podem ser excluídas.
+- Organização de episódios por temporada, facilitando a navegação.
+- Utilização de **Árvores B+** para manter o relacionamento entre séries e episódios.
+- Uso de **Tabela Hash Extensível** como índice direto, otimizando buscas.
 
-As operações de inclusão, busca, alteração e exclusão de séries estão implementadas e funcionando corretamente? As operações de inclusão, busca, alteração e exclusão de episódios, por série, estão implementadas e funcionando corretamente? Essas operações usam a classe CRUD genérica para a construção do arquivo e as classes Tabela Hash Extensível e Árvore B+ como índices diretos e indiretos? O atributo de ID de série, como chave estrangeira, foi criado na classe de episódios? Há uma árvore B+ que registre o relacionamento 1:N entre episódios e séries? Há uma visualização das séries que mostre os episódios por temporada? A remoção de séries checa se há algum episódio vinculado a ela? A inclusão da série em um episódio se limita às séries existentes? O trabalho está funcionando corretamente? O trabalho está completo? O trabalho é original e não a cópia de um trabalho de outro grupo? Lembre-se de que, para essa atividade, eu avaliarei tanto o esforço quanto o resultado. Portanto, escrevam o relatório de forma que me ajude a observar o resultado.
+## 👥 Participantes
+- **Alice Salim Khouri Antunes** – Entidade Série + Visão
+- **Guilherme Henrique da Silva Teodoro** – Entidade Episódio + Visão
+- **Daniel Victor Rocha Costa** – Controle de Séries + Relacionamento
+- **Arthur Carvalho Rodrigues** – Controle de Episódios + Integração geral e menus
+
+## 📦 Estrutura de Classes
+
+### 📁 model
+- **Serie.java**: Representa a entidade série, com os seguintes atributos:
+  - id, nome, anoLancamento, sinopse, streaming
+- **Episodio.java**: Representa a entidade episódio, com os atributos:
+  - id, idSerie, nome, temporada, dataLancamento, duracao
+
+### 📁 view
+- **VisaoSeries.java**: Métodos para leitura e exibição de séries:
+  - `Serie leSerie()`: Lê os dados de uma série fornecidos pelo usuário.
+  - `void mostraSerie(Serie s)`: Exibe os dados de uma série.
+- **VisaoEpisodios.java**: Métodos para leitura e exibição de episódios:
+  - `Episodio leEpisodio(int idSerie)`: Lê um episódio vinculado a uma série.
+  - `void mostraEpisodio(Episodio e)`: Exibe os dados de um episódio.
+
+### 📁 controller
+- **ControleSeries.java**: Controla o menu e as operações com séries:
+  - Inclusão, alteração, busca e exclusão de séries.
+  - Verificação de episódios vinculados antes da exclusão.
+  - Visualização dos episódios organizados por temporada.
+- **ControleEpisodios.java**: Gerencia os episódios vinculados às séries:
+  - Inclusão, alteração, busca e exclusão de episódios.
+  - Verificação da existência da série antes de vincular um episódio.
+
+### Main.java
+- Menu principal que organiza as operações:
+  - Gerenciamento de séries.
+  - Gerenciamento de episódios (após escolher uma série).
+  - Opção para sair.
+
+## 🧠 Desenvolvimento
+
+O desenvolvimento do projeto exigiu atenção especial ao relacionamento entre as entidades e à estruturação dos dados em disco. A implementação das **Árvores B+** e da **Tabela Hash Extensível** foi desafiadora, mas trouxe ganhos significativos em eficiência, especialmente nas buscas e no relacionamento entre séries e episódios.
+
+O projeto segue os princípios do padrão **MVC (Model-View-Controller)**, garantindo organização e separação clara de responsabilidades.
+
+## 📋 Checklist
+- [x] CRUD completo para séries e episódios
+- [x] Relacionamento 1:N garantido entre séries e episódios
+- [x] Implementação de Árvores B+ para vinculação
+- [x] Uso de Tabela Hash Extensível para índice direto
+- [x] Exclusão de séries condicionada à ausência de episódios vinculados
+- [x] Inclusão de episódio limitada a séries existentes
+- [x] Visualização por temporada
+- [x] Testes completos e funcionamento garantido
+- [x] Projeto original e completo
+
+## 🔗 Repositório
+[PUCFlix no GitHub](https://github.com/alicesalim/tp1_aeds3.git)
+
+Projeto desenvolvido como parte do Trabalho Prático 1 da disciplina de AEDS 3 — PUC Minas.
+
