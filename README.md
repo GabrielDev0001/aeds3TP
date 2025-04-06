@@ -70,6 +70,8 @@ O projeto segue o padrão arquitetural **MVC (Model-View-Controller)**, promoven
 
 - Vitor Leite:
 
+- Mateus Martins Parreiras: Implementar as árvores B+.
+
 ## 📂 Repositório
 [PUCFlix no GitHub](https://github.com/alicesalim/tp1_aeds3.git)
 

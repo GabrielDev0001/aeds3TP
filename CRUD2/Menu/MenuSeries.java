@@ -5,11 +5,11 @@ import java.util.Scanner;
 
 public class MenuSeries {
     
-    ArquivoCliente arqClientes;
+    ArquivoSerie arqSeries;
     private static Scanner console = new Scanner(System.in);
 
-    public MenuClientes() throws Exception {
-        arqClientes = new ArquivoCliente();
+    public MenuSeries() throws Exception {
+        arqSeries = new ArquivoSerie();
     }
 
     public void menu() {
@@ -35,16 +35,16 @@ public class MenuSeries {
 
             switch (opcao) {
                 case 1:
-                    buscarCliente();
+                    buscarSerie();
                     break;
                 case 2:
-                    incluirCliente();
+                    incluirSerie();
                     break;
                 case 3:
-                    alterarCliente();
+                    alterarSerie();
                     break;
                 case 4:
-                    excluirCliente();
+                    excluirSerie();
                     break;
                 case 0:
                     break;
@@ -57,46 +57,40 @@ public class MenuSeries {
     }
 
 
-    public void buscarCliente() {
-        System.out.println("\nBusca de cliente");
-        String cpf;
-        boolean cpfValido = false;
+    public void buscarSerie() {
+        System.out.println("\nBusca de Série");
+        String nome;
+        boolean nomeValido = false;
 
         do {
-            System.out.print("\nCPF (11 dígitos): ");
-            cpf = console.nextLine();  // Lê o CPF digitado pelo usuário
+            System.out.print("\nNome: ");
+            nome = console.nextLine();  // Lê o CPF digitado pelo usuário
 
-            if(cpf.isEmpty())
-                return; 
-
-            // Validação do CPF (11 dígitos e composto apenas por números)
-            if (cpf.length() == 11 && cpf.matches("\\d{11}")) {
-                cpfValido = true;  // CPF válido
-            } else {
-                System.out.println("CPF inválido. O CPF deve conter exatamente 11 dígitos numéricos, sem pontos e traços.");
-            }
-        } while (!cpfValido);
+            if(nome.isEmpty())
+                return;
+            else nomeValido =true;
+        } while (!nomeValido);
 
         try {
-            Cliente cliente = arqClientes.read(cpf);  // Chama o método de leitura da classe Arquivo
-            if (cliente != null) {
-                mostraCliente(cliente);  // Exibe os detalhes do cliente encontrado
+            Serie Serie = arqSeries.read(nome);  // Chama o método de leitura da classe Arquivo
+            if (Serie != null) {
+                mostraSerie(Serie);  // Exibe os detalhes do Serie encontrado
             } else {
-                System.out.println("Cliente não encontrado.");
+                System.out.println("Serie não encontrado.");
             }
         } catch(Exception e) {
-            System.out.println("Erro do sistema. Não foi possível buscar o cliente!");
+            System.out.println("Erro do sistema. Não foi possível buscar a Serie!");
             e.printStackTrace();
         }
     }   
 
 
-    public void incluirCliente() {
-        System.out.println("\nInclusão de cliente");
+    public void incluirSerie() {
+        System.out.println("\nInclusão de Serie");
         String nome = "";
-        String cpf = "";
-        float salario = 0;
+        String sinopse = "";
         LocalDate dataNascimento = null;
+        String stream = "";
         boolean dadosCorretos = false;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
@@ -106,30 +100,25 @@ public class MenuSeries {
             if(nome.length()==0)
                 return;
             if(nome.length()<4)
-                System.err.println("O nome do cliente deve ter no mínimo 4 caracteres.");
+                System.err.println("O nome da Serie deve ter no mínimo 4 caracteres.");
         } while(nome.length()<4);
 
         do {
-            System.out.print("CPF (11 dígitos sem pontos ou traço): ");
-            cpf = console.nextLine();
-            if(cpf.length()!=11 && cpf.length()!=0)
-                System.err.println("O CPF deve ter exatamente 11 dígitos.");
-        } while(cpf.length()!=11 && cpf.length()!=0);
+            System.out.print("Sinopse: ");
+            sinopse = console.nextLine();
+            if(sinopse.length()!=0)
+                System.err.println("a sinopse deve conter pelo menos um caracter.");
+        } while(sinopse.length()!=0);
 
         do {
-            dadosCorretos = false;
-            System.out.print("Salário: ");
-            if (console.hasNextFloat()) {
-                salario = console.nextFloat();
-                dadosCorretos = true;
-            } else {
-                System.err.println("Salário inválido! Por favor, insira um número válido.");
-            }
-            console.nextLine(); // Limpar o buffer 
-        } while(!dadosCorretos);
+            System.out.print("Stream: ");
+            stream = console.nextLine();
+            if(stream.length()!=0)
+                System.err.println("Porfavor, informe onde se encontra a série.");
+        } while(stream.length()!=0);
 
         do {
-            System.out.print("Data de nascimento (DD/MM/AAAA): ");
+            System.out.print("Data de lançamento (DD/MM/AAAA): ");
             String dataStr = console.nextLine();
             dadosCorretos = false;
             try {
@@ -140,79 +129,71 @@ public class MenuSeries {
             }
         } while(!dadosCorretos);
 
-        System.out.print("\nConfirma a inclusão da cliente? (S/N) ");
+        System.out.print("\nConfirma a inclusão da Serie? (S/N) ");
         char resp = console.nextLine().charAt(0);
         if(resp=='S' || resp=='s') {
             try {
-                Cliente c = new Cliente(nome, cpf, salario, dataNascimento);
-                arqClientes.create(c);
-                System.out.println("Cliente incluído com sucesso.");
+                Serie c = new Serie(nome, sinopse, dataNascimento, stream);
+                arqSeries.create(c);
+                System.out.println("Série incluída com sucesso.");
             } catch(Exception e) {
-                System.out.println("Erro do sistema. Não foi possível incluir o cliente!");
+                System.out.println("Erro do sistema. Não foi possível incluir a Série!");
             }
         }
     }
 
-    public void alterarCliente() {
-        System.out.println("\nAlteração de cliente");
-        String cpf;
-        boolean cpfValido = false;
+    public void alterarSerie() {
+        System.out.println("\nAlteração de Série");
+        String nome;
+        boolean nomeValido = false;
 
         do {
-            System.out.print("\nCPF (11 dígitos): ");
-            cpf = console.nextLine();  // Lê o CPF digitado pelo usuário
+            System.out.print("\nnome: ");
+            nome = console.nextLine();  // Lê o nome digitado pelo usuário
 
-            if(cpf.isEmpty())
+            if(nome.isEmpty())
                 return; 
-
-            // Validação do CPF (11 dígitos e composto apenas por números)
-            if (cpf.length() == 11 && cpf.matches("\\d{11}")) {
-                cpfValido = true;  // CPF válido
-            } else {
-                System.out.println("CPF inválido. O CPF deve conter exatamente 11 dígitos numéricos, sem pontos e traços.");
+            else {
+                nomeValido = true;
             }
-        } while (!cpfValido);
+        } while (!nomeValido);
 
 
         try {
-            // Tenta ler o cliente com o ID fornecido
-            Cliente cliente = arqClientes.read(cpf);
-            if (cliente != null) {
-                System.out.println("Cliente encontrado:");
-                mostraCliente(cliente);  // Exibe os dados do cliente para confirmação
+            // Tenta ler o Serie com o nome fornecido
+            Serie Serie = arqSeries.read(nome);
+            if (Serie != null) {
+                System.out.println("Serie encontrado:");
+                mostraSerie(Serie);  // Exibe os dados do Serie para confirmação
 
                 // Alteração de nome
                 System.out.print("\nNovo nome (deixe em branco para manter o anterior): ");
                 String novoNome = console.nextLine();
                 if (!novoNome.isEmpty()) {
-                    cliente.nome = novoNome;  // Atualiza o nome se fornecido
+                    Serie.nome = novoNome;  // Atualiza o nome se fornecido
                 }
 
-                // Alteração de CPF
-                System.out.print("Novo CPF (deixe em branco para manter o anterior): ");
-                String novoCpf = console.nextLine();
-                if (!novoCpf.isEmpty()) {
-                    cliente.cpf = novoCpf;  // Atualiza o CPF se fornecido
+                // Alteração de sinopse
+                System.out.print("Nova sinopse (deixe em branco para manter o anterior): ");
+                String novoSinopse = console.nextLine();
+                if (!novoSinopse.isEmpty()) {
+                    Serie.sinopse = novoSinopse;  // Atualiza a sinopse se fornecido
                 }
 
-                // Alteração de salário
-                System.out.print("Novo salário (deixe em branco para manter o anterior): ");
-                String novoSalarioStr = console.nextLine();
-                if (!novoSalarioStr.isEmpty()) {
-                    try {
-                        cliente.salario = Float.parseFloat(novoSalarioStr);  // Atualiza o salário se fornecido
-                    } catch (NumberFormatException e) {
-                        System.err.println("Salário inválido. Valor mantido.");
-                    }
-                }
+                 // Alteração de stream
+                 System.out.print("Novo stream (deixe em branco para manter o anterior): ");
+                 String novoStream = console.nextLine();
+                 if (!novoStream.isEmpty()) {
+                     Serie.stream = novoStream;  // Atualiza o stream se fornecido
+                 }
 
-                // Alteração de data de nascimento
-                System.out.print("Nova data de nascimento (DD/MM/AAAA) (deixe em branco para manter a anterior): ");
+                // Alteração de data de lancamento
+                System.out.print("Nova data de lançamento (DD/MM/AAAA) (deixe em branco para manter a anterior): ");
                 String novaDataStr = console.nextLine();
                 if (!novaDataStr.isEmpty()) {
                     try {
                         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                        cliente.nascimento = LocalDate.parse(novaDataStr, formatter);  // Atualiza a data de nascimento se fornecida
+                        Serie.lancamento = LocalDate.parse(novaDataStr, formatter);  // Atualiza a data de lancamento se fornecida
                     } catch (Exception e) {
                         System.err.println("Data inválida. Valor mantido.");
                     }
@@ -223,84 +204,80 @@ public class MenuSeries {
                 char resp = console.next().charAt(0);
                 if (resp == 'S' || resp == 's') {
                     // Salva as alterações no arquivo
-                    boolean alterado = arqClientes.update(cliente);
+                    boolean alterado = arqSeries.update(Serie);
                     if (alterado) {
-                        System.out.println("Cliente alterado com sucesso.");
+                        System.out.println("Serie alterada com sucesso.");
                     } else {
-                        System.out.println("Erro ao alterar o cliente.");
+                        System.out.println("Erro ao alterar a Serie.");
                     }
                 } else {
                     System.out.println("Alterações canceladas.");
                 }
             } else {
-                System.out.println("Cliente não encontrado.");
+                System.out.println("Serie não encontrada.");
             }
         } catch (Exception e) {
-            System.out.println("Erro do sistema. Não foi possível alterar o cliente!");
+            System.out.println("Erro do sistema. Não foi possível alterar a Serie!");
             e.printStackTrace();
         }
         
     }
 
 
-    public void excluirCliente() {
-        System.out.println("\nExclusão de cliente");
-        String cpf;
-        boolean cpfValido = false;
+    public void excluirSerie() {
+        System.out.println("\nExclusão de Serie");
+        String nome;
+        boolean nomeValido = false;
 
         do {
-            System.out.print("\nCPF (11 dígitos): ");
-            cpf = console.nextLine();  // Lê o CPF digitado pelo usuário
+            System.out.print("\nnome: ");
+            nome = console.nextLine();  // Lê o nome digitado pelo usuário
 
-            if(cpf.isEmpty())
-                return; 
-
-            // Validação do CPF (11 dígitos e composto apenas por números)
-            if (cpf.length() == 11 && cpf.matches("\\d{11}")) {
-                cpfValido = true;  // CPF válido
-            } else {
-                System.out.println("CPF inválido. O CPF deve conter exatamente 11 dígitos numéricos, sem pontos e traços.");
+            if(nome.isEmpty())
+            return; 
+            else {
+                nomeValido = true;
             }
-        } while (!cpfValido);
+        } while (!nomeValido);
 
         try {
-            // Tenta ler o cliente com o ID fornecido
-            Cliente cliente = arqClientes.read(cpf);
-            if (cliente != null) {
-                System.out.println("Cliente encontrado:");
-                mostraCliente(cliente);  // Exibe os dados do cliente para confirmação
+            // Tenta ler o Serie com o ID fornecido
+            Serie Serie = arqSeries.read(nome);
+            if (Serie != null) {
+                System.out.println("Serie encontrada:");
+                mostraSerie(Serie);  // Exibe os dados do Serie para confirmação
 
-                System.out.print("\nConfirma a exclusão do cliente? (S/N) ");
+                System.out.print("\nConfirma a exclusão do Serie? (S/N) ");
                 char resp = console.next().charAt(0);  // Lê a resposta do usuário
 
                 if (resp == 'S' || resp == 's') {
-                    boolean excluido = arqClientes.delete(cpf);  // Chama o método de exclusão no arquivo
+                    boolean excluido = arqSeries.delete(nome);  // Chama o método de exclusão no arquivo
                     if (excluido) {
-                        System.out.println("Cliente excluído com sucesso.");
+                        System.out.println("Serie excluída com sucesso.");
                     } else {
-                        System.out.println("Erro ao excluir o cliente.");
+                        System.out.println("Erro ao excluir a Serie.");
                     }
                 } else {
                     System.out.println("Exclusão cancelada.");
                 }
             } else {
-                System.out.println("Cliente não encontrado.");
+                System.out.println("Serie não encontrada.");
             }
         } catch (Exception e) {
-            System.out.println("Erro do sistema. Não foi possível excluir o cliente!");
+            System.out.println("Erro do sistema. Não foi possível excluir a Serie!");
             e.printStackTrace();
         }
     }
 
 
-    public void mostraCliente(Cliente cliente) {
-    if (cliente != null) {
-        System.out.println("\nDetalhes do Cliente:");
+    public void mostraSerie(Serie Serie) {
+    if (Serie != null) {
+        System.out.println("\nDetalhes da Serie:");
         System.out.println("----------------------");
-        System.out.printf("Nome......: %s%n", cliente.nome);
-        System.out.printf("CPF.......: %s%n", cliente.cpf);
-        System.out.printf("Salário...: R$ %.2f%n", cliente.salario);
-        System.out.printf("Nascimento: %s%n", cliente.nascimento.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        System.out.printf("Nome......: %s%n", Serie.nome);
+        System.out.printf("Sinopse.......: %s%n", Serie.sinopse);
+        System.out.printf("Stream.......: %s%n", Serie.stream);
+        System.out.printf("Lançamento: %s%n", Serie.lancamento.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
         System.out.println("----------------------");
     }
 }
