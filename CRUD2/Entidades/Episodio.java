@@ -91,8 +91,8 @@ public class Episodio {
         this.avaliacao = avaliacao;
     }
     
-    // Serialização
-    public byte[] toByteArray() throws IOException {
+    public byte[] toByteArray() throws IOException {//serializa o objeto
+        // Cria um ByteArrayOutputStream para armazenar os dados serializados
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         DataOutputStream dos = new DataOutputStream(baos);
 
@@ -106,8 +106,8 @@ public class Episodio {
         return baos.toByteArray();
     }
 
-    // Desserialização
-    public void fromByteArray(byte[] b) throws IOException {
+    public void fromByteArray(byte[] b) throws IOException {//deserializa o objeto
+        // Cria um ByteArrayInputStream para ler os dados serializados
         ByteArrayInputStream bais = new ByteArrayInputStream(b);
         DataInputStream dis = new DataInputStream(bais);
 
