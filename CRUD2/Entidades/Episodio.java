@@ -39,4 +39,11 @@ public class Episodio {
         return temporada;
     }
     
+    public String toString() {
+        return "\nID.................: " + this.id +
+               "\nNome...............: " + this.nome +
+               "\nData de lançamento.: " + this.dataLancamento +
+               "\nDuração............: " + this.duracao +
+               "\nTemporada .........: " + this.temporada;
+    }
 }
