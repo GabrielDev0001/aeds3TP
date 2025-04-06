@@ -6,6 +6,8 @@ public class Episodio {
     private String dataLancamento;
     private float duracao; 
     private int temporada; 
+    private int idSerie;
+    private float avaliacao;
 
     public Episodio(int id, String nome, String dataLancamento, float duracao, int temporada) {
         this.id = id;
@@ -65,12 +67,20 @@ public class Episodio {
     public int getTemporada() {
         return this.temporada;
     }
+    public int getIDSerie() {
+        return this.idSerie;
+    }   
     
     public String toString() {
         return "\nID.................: " + this.id +
                "\nNome...............: " + this.nome +
                "\nData de lançamento.: " + this.dataLancamento +
                "\nDuração............: " + this.duracao +
-               "\nTemporada .........: " + this.temporada;
+               "\nTemporada .........: " + this.temporada +
+               "\nAvaliação .........: " + this.avaliacao;
+    }
+
+    public float getAvaliacao() {
+        return this.avaliacao;
     }
 }

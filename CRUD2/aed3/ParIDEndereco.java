@@ -8,6 +8,7 @@ import java.io.IOException;
 public class ParIDEndereco implements aed3.RegistroHashExtensivel<ParIDEndereco> {
     
     private int id;   // chave
+    private int id2;
     private long endereco;    // valor
     private final short TAMANHO = 12;  // tamanho em bytes
 
@@ -27,6 +28,10 @@ public class ParIDEndereco implements aed3.RegistroHashExtensivel<ParIDEndereco>
 
     public long getEndereco() {
         return endereco;
+    }
+
+    public int getId_agregado() {
+        return this.id2;
     }
 
     @Override

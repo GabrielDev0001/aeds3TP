@@ -1,4 +1,5 @@
 package Arquivo;
+import Entidades.Series;
 import aed3.*;
 
 public class ArquivoSeries extends aed3.Arquivo<Series> {
@@ -68,6 +69,15 @@ public class ArquivoSeries extends aed3.Arquivo<Series> {
                 indiceIndiretoCPF.delete(ParCPFID.hash(clienteVelho.getCpf()));
                 indiceIndiretoCPF.create(new ParCPFID(novoCliente.getCpf(), novoCliente.getId()));
             }
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean serieExiste(int id) throws Exception{
+        ArquivoSeries arqSeries = new ArquivoSeries();
+        Series s = arqSeries.read(id);   // na superclasse
+        if(s != null) {
             return true;
         }
         return false;
