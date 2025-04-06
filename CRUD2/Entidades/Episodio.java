@@ -35,28 +35,35 @@ public class Episodio {
             throw new Exception("Duração menor que zero!");    
     }
 
-    public int getId() {
-        return id;
-    }
-
     public void setId(int id) {
         this.id = id;
     }
-
-    public String getnome() {
-        return nome;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
-
-    public String getdataLancamento() {
-        return dataLancamento;
+    public void setDataLancamento(String dataLancamento) {
+        this.dataLancamento = dataLancamento;
     }
-
-    public float getduracao() {
-        return duracao;
+    public void setDuracao(float duracao) {
+        this.duracao = duracao;
     }
-
-    public int gettemporada() {
-        return temporada;
+    public void setTemporada(int temporada) {
+        this.temporada = temporada;
+    }
+    public int getId() {
+        return this.id;
+    }
+    public String getNome() {
+        return this.nome;
+    }
+    public String getDataLancamento() {
+        return this.dataLancamento;
+    }
+    public float getDuracao() {
+        return this.duracao;
+    }
+    public int getTemporada() {
+        return this.temporada;
     }
     
     public String toString() {
