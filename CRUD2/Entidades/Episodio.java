@@ -1,15 +1,22 @@
 package Entidades;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.time.LocalDate;
+
 public class Episodio {
     private int id;
     private String nome;
-    private String dataLancamento;
     private float duracao; 
     private int temporada; 
     private int idSerie;
     private float avaliacao;
+    private LocalDate dataLancamento;
 
-    public Episodio(int id, String nome, String dataLancamento, float duracao, int temporada) {
+    public Episodio(int id, String nome, LocalDate dataLancamento, float duracao, int temporada) {
         this.id = id;
         this.nome = nome;
         this.dataLancamento = dataLancamento;
@@ -17,7 +24,7 @@ public class Episodio {
         this.temporada = temporada;
     }
 
-    public Episodio(int id, String nome, int temporada, String dataLancamento, float duracao) throws Exception {
+    public Episodio(int id, String nome, int temporada, LocalDate dataLancamento, float duracao) throws Exception {
         this.id = id;
         if (nome.length() > 0 && nome.length() <= 50)
             this.nome = nome;
@@ -27,10 +34,7 @@ public class Episodio {
             this.temporada = (byte) temporada;
         else
             throw new Exception("Temporada inválida! Deve ser maior ou igual a zero.");
-        if (dataLancamento.length() == 10 && dataLancamento.charAt(2) == '/' && dataLancamento.charAt(5) == '/')
-            this.dataLancamento = dataLancamento;
-        else
-            throw new Exception("Data inválida! Formato deve ser dd/MM/yyyy.");
+        this.dataLancamento = dataLancamento;
         if (duracao >= 0)
             this.duracao = duracao;
         else
@@ -43,7 +47,7 @@ public class Episodio {
     public void setNome(String nome) {
         this.nome = nome;
     }
-    public void setDataLancamento(String dataLancamento) {
+    public void setDataLancamento(LocalDate dataLancamento) {
         this.dataLancamento = dataLancamento;
     }
     public void setDuracao(float duracao) {
@@ -58,7 +62,7 @@ public class Episodio {
     public String getNome() {
         return this.nome;
     }
-    public String getDataLancamento() {
+    public LocalDate getDataLancamento() {
         return this.dataLancamento;
     }
     public float getDuracao() {
@@ -82,5 +86,36 @@ public class Episodio {
 
     public float getAvaliacao() {
         return this.avaliacao;
+    }
+    public void setAvaliacao(float avaliacao) {
+        this.avaliacao = avaliacao;
+    }
+    
+    // Serialização
+    public byte[] toByteArray() throws IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        DataOutputStream dos = new DataOutputStream(baos);
+
+        dos.writeInt(id);
+        dos.writeInt(idSerie);
+        dos.writeUTF(nome);
+        dos.writeInt(temporada);
+        dos.writeLong(dataLancamento.toEpochDay());
+        dos.writeFloat(duracao);
+
+        return baos.toByteArray();
+    }
+
+    // Desserialização
+    public void fromByteArray(byte[] b) throws IOException {
+        ByteArrayInputStream bais = new ByteArrayInputStream(b);
+        DataInputStream dis = new DataInputStream(bais);
+
+        id = dis.readInt();
+        idSerie = dis.readInt();
+        nome = dis.readUTF();
+        temporada = dis.readInt();
+        dataLancamento = LocalDate.ofEpochDay(dis.readLong());
+        duracao = dis.readInt();
     }
 }
