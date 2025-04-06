@@ -82,6 +82,7 @@ public class Episodio {
                "\nDuração............: " + this.duracao +
                "\nTemporada .........: " + this.temporada +
                "\nAvaliação .........: " + this.avaliacao;
+               //para ficar parecido com o do professor
     }
 
     public float getAvaliacao() {
@@ -92,7 +93,7 @@ public class Episodio {
     }
     
     public byte[] toByteArray() throws IOException {//serializa o objeto
-        // Cria um ByteArrayOutputStream para armazenar os dados serializados
+        // cria um ByteArrayOutputStream para armazenar os dados serializados
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         DataOutputStream dos = new DataOutputStream(baos);
 
@@ -107,7 +108,7 @@ public class Episodio {
     }
 
     public void fromByteArray(byte[] b) throws IOException {//deserializa o objeto
-        // Cria um ByteArrayInputStream para ler os dados serializados
+        // cria um ByteArrayInputStream para ler os dados serializados
         ByteArrayInputStream bais = new ByteArrayInputStream(b);
         DataInputStream dis = new DataInputStream(bais);
 
