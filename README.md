@@ -1,4 +1,4 @@
-# 📺 PUCFlix 1.0
+# 📺 PUCFlix 
 
 PUCFlix é um projeto desenvolvido como parte do Trabalho Prático 1 da disciplina de **Algoritmos e Estruturas de Dados 3 (AEDS 3)** na **PUC Minas**. O objetivo do sistema é gerenciar séries e episódios, utilizando estrutura de arquivos e índices com **Árvores B+** e **Tabela Hash Extensível** para garantir eficiência e organização.
 
@@ -13,10 +13,9 @@ O PUCFlix permite realizar operações de **CRUD** (Criar, Ler, Atualizar e Dele
 - Uso de **Tabela Hash Extensível** como índice direto, otimizando buscas.
 
 ## 👥 Participantes
-- **Alice Salim Khouri Antunes** – Entidade Série + Visão
-- **Guilherme Henrique da Silva Teodoro** – Entidade Episódio + Visão
-- **Daniel Victor Rocha Costa** – Controle de Séries + Relacionamento
-- **Arthur Carvalho Rodrigues** – Controle de Episódios + Integração geral e menus
+- **Vitor Leite Setragni**
+- **Gabriel Henrique de Morais**
+- **Mateus Martins Parreiras**
 
 ## 📦 Estrutura de Classes
 
