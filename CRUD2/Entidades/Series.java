@@ -40,16 +40,16 @@ public class Series implements Registro {
         return id;
     }
 
-    public String get() {
-        return cpf;
+    public String getNome() {
+        return nome;
     }
 
     public String toString() {
         return "\nID........: " + this.id +
                "\nNome......: " + this.nome +
-               "\nCPF.......: " + this.cpf +
-               "\nSalário...: " + this.salario +
-               "\nNascimento: " + this.nascimento;
+               "\nSinopse.......: " + this.sinopse +
+               "\nStream...: " + this.stream +
+               "\nAno de Lançamento: " + this.lancamento;
     }
 
     public byte[] toByteArray() throws IOException {
@@ -57,9 +57,9 @@ public class Series implements Registro {
         DataOutputStream dos = new DataOutputStream(baos);
         dos.writeInt(this.id);
         dos.writeUTF(this.nome);
-        dos.write(this.cpf.getBytes());
-        dos.writeFloat(this.salario);
-        dos.writeInt((int) this.nascimento.toEpochDay());
+        dos.writeUTF(this.sinopse);
+        dos.writeUTF(this.stream);
+        dos.writeInt((int) this.lancamento.toEpochDay());
         return baos.toByteArray();
     }
 
@@ -68,12 +68,10 @@ public class Series implements Registro {
         ByteArrayInputStream bais = new ByteArrayInputStream(b);
         DataInputStream dis = new DataInputStream(bais);
 
-        byte[] cpf = new byte[11];
         this.id = dis.readInt();
         this.nome = dis.readUTF();
-        dis.read(cpf);
-        this.cpf = new String(cpf);
-        this.salario = dis.readFloat();
-        this.nascimento = LocalDate.ofEpochDay(dis.readInt());
+        this.sinopse = dis.readUTF();
+        this.stream = dis.readUTF();
+        this.lancamento = LocalDate.ofEpochDay(dis.readInt());
     }
 }
