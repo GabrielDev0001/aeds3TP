@@ -13,8 +13,8 @@ public class ArquivoSeries extends aed3.Arquivo<Series> {
         indiceNomeSerie = new HashExtensivel<>(
         ParNomeSerieId.class.getConstructor(), 
         5, 
-        ".\\dados\\series\\indiceCPF.d.db",   // diretório
-        ".\\dados\\series\\indiceCPF.c.db"   // cestos
+        ".\\dados\\series\\indiceNome.d.db",   // diretório
+        ".\\dados\\series\\indiceNome.c.db"   // cestos
         );    
     }
     
