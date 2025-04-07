@@ -31,7 +31,7 @@ public static void main(String[] args) {
                     (new MenuSeries()).menu();
                     break;
                 case 2:
-                    (new MenuClientes()).menu();
+                    (new MenuEpisodio()).menu();
                 break;
                 case 0:
                     break;
