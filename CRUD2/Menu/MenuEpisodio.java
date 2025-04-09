@@ -58,45 +58,61 @@ public class MenuEpisodio {
         } while (opcao != 0);
     }
 
-    public void incluirEpisodio() {
-        System.out.println("\nInclusão de Episódio");
-        String nome = new String();
-        LocalDate dataLancamento = null;
+    public void incluirSerie() {
+        System.out.println("\nInclusão de Serie");
+        String nome = "";
+        String sinopse = "";
+        LocalDate dataNascimento = null;
+        String stream = "";
         boolean dadosCorretos = false;
-        int duracao;
-        int temporada;
-        float avaliacao;
-
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
         do {
             System.out.print("\nNome (min. de 4 letras ou vazio para cancelar): ");
             nome = console.nextLine();
+            if(nome.length()==0)
+                return;
             if(nome.length()<4)
-                System.err.println("O nome o Episódio deve ter no mínimo 4 caracteres.");
+                System.err.println("O nome da Serie deve ter no mínimo 4 caracteres.");
         } while(nome.length()<4);
+
+        do {
+            System.out.print("Sinopse: ");
+            sinopse = console.nextLine();
+            if(sinopse.length()!=0)
+                System.err.println("a sinopse deve conter pelo menos um caracter.");
+        } while(sinopse.length()!=0);
+
+        do {
+            System.out.print("Stream: ");
+            stream = console.nextLine();
+            if(stream.length()!=0)
+                System.err.println("Porfavor, informe onde se encontra a série.");
+        } while(stream.length()!=0);
 
         do {
             System.out.print("Data de lançamento (DD/MM/AAAA): ");
             String dataStr = console.nextLine();
             dadosCorretos = false;
             try {
-                dataLancamento = LocalDate.parse(dataStr, formatter);
+                dataNascimento = LocalDate.parse(dataStr, formatter);
                 dadosCorretos = true;
             } catch (Exception e) {
                 System.err.println("Data inválida! Use o formato DD/MM/AAAA.");
             }
         } while(!dadosCorretos);
 
-        System.out.println("Duração do episódio (em minutos): ");
-        duracao = console.nextInt();
-
-        System.out.println("Digite qual a temporada em que o episódio está inserido: ");
-        temporada = console.nextInt();
-
-        System.out.println("Digite a avaliação do episódio: ");
-        avaliacao = console.nextFloat();
-
+        System.out.print("\nConfirma a inclusão da Serie? (S/N) ");
+        char resp = console.nextLine().charAt(0);
+        if(resp=='S' || resp=='s') {
+            try {
+                Serie c = new Serie(nome, sinopse, dataNascimento, stream);
+                arqSeries.create(c);
+                System.out.println("Série incluída com sucesso.");
+            } catch(Exception e) {
+                System.out.println("Erro do sistema. Não foi possível incluir a Série!");
+            }
+        }
     }
 
     public void buscarEpisodio() {
