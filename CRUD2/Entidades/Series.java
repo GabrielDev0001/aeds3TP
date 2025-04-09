@@ -78,4 +78,5 @@ public class Series implements Registro {
         this.stream = dis.readUTF();
         this.lancamento = LocalDate.ofEpochDay(dis.readInt());
     }
+
 }

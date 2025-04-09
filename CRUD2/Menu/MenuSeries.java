@@ -10,11 +10,11 @@ import Menu.*;
 
 public class MenuSeries {
     
-    ArquivoSerie arqSeries;
+    ArquivoSeries arqSeries;
     private static Scanner console = new Scanner(System.in);
 
     public MenuSeries() throws Exception {
-        arqSeries = new ArquivoSerie();
+        arqSeries = new ArquivoSeries();
     }
 
     public void menu() {
@@ -76,7 +76,7 @@ public class MenuSeries {
         } while (!nomeValido);
 
         try {
-            Serie Serie = arqSeries.read(nome);  
+            Series Serie = arqSeries.read(nome);  
             if (Serie != null) {
                 mostraSerie(Serie);  
             } else {
@@ -137,7 +137,7 @@ public class MenuSeries {
         char resp = console.nextLine().charAt(0);
         if(resp=='S' || resp=='s') {
             try {
-                Serie c = new Serie(nome, sinopse, dataNascimento, stream);
+                Series c = new Series(nome, sinopse, dataNascimento, stream);
                 arqSeries.create(c);
                 System.out.println("Série incluída com sucesso.");
             } catch(Exception e) {
@@ -164,7 +164,7 @@ public class MenuSeries {
 
 
         try {
-            Serie Serie = arqSeries.read(nome);
+            Series Serie = arqSeries.read(nome);
             if (Serie != null) {
                 System.out.println("Serie encontrado:");
                 mostraSerie(Serie);  
@@ -243,11 +243,12 @@ public class MenuSeries {
         } while (!nomeValido);
 
         try {
-            Serie Serie = arqSeries.read(nome);
-            if (Serie != null) {
+            Series serie = arqSeries.read(nome);
+            if (serie != null) {
                 System.out.println("Serie encontrada:");
 
                 System.out.print("\nConfirma a exclusão do Serie? (S/N) ");
+                char resp = console.nextLine().charAt(0);
 
                 if (resp == 'S' || resp == 's') {
                     boolean excluido = arqSeries.delete(nome);  
@@ -269,7 +270,7 @@ public class MenuSeries {
     }
 
 
-    public void mostraSerie(Serie Serie) {
+    public void mostraSerie(Series Serie) {
     if (Serie != null) {
         System.out.println("\nDetalhes da Serie:");
         System.out.println("----------------------");
