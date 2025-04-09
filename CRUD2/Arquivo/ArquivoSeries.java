@@ -1,67 +1,112 @@
-package Arquivo;
-import aed3.*;
+package modelo;
+import entidades.Episodio;
+import entidades.Serie;
 
-public class ArquivoSeries extends aed3.Arquivo<Series> {
+import java.util.ArrayList;
 
-    Arquivo<Series> arqSeries;
-    HashExtensivel<ParNomeID> indiceNomeSerie;
+import aeds3.*;
 
-
-    public ArquivoSeriesArvore() throws Exception {
-        ssuper("series", Serie.class.getConstructor());
-        
-        indiceNomeSerie = new HashExtensivel<>(
-        ParNomeSerieId.class.getConstructor(), 
-        5, 
-        ".\\dados\\series\\indiceNome.d.db",   // diretório
-        ".\\dados\\series\\indiceNome.c.db"   // cestos
-        );    
-    }
+public class ArquivoSeries extends Arquivo<Serie> {
     
+    Arquivo<Serie> arqSeries;
+    ArvoreBMais<ParNomeSerieId> indiceNomeSerie;
+    ArvoreBMais <ParIdId> indices;
+
+    public ArquivoSeries() throws Exception {
+        super("series", Serie.class.getConstructor());
+        
+        indiceNomeSerie = new ArvoreBMais<>(
+            ParNomeSerieId.class.getConstructor(), 
+            5, 
+            "./dados/"+nomeEntidade+"/indiceNomeSerie.d.db");
+    }
 
     @Override
-    public int create(Series c) throws Exception {
-        int id = super.create(c);
-        indiceNomeSerie.create(new ParnomeID(c.getnome(), id));
+    public int create(Serie s) throws Exception {
+        int id = super.create(s);
+        indiceNomeSerie.create(new ParNomeSerieId(s.getNome(), id));
         return id;
     }
-
-    public Series read(String nome) throws Exception {
-        ParnomeID pci = indiceNomeSerie.read(ParnomeID.hash(nome));
-        if(pci == null)
+ 
+    public Serie[] readNome(String nome) throws Exception {
+        if(nome.length()==0)
             return null;
-        return read(pci.getId());
-    }
-    
-    public boolean delete(String nome) throws Exception {
-        ParnomeID pci = indiceNomeSerie.read(ParnomeID.hash(nome));
-        if(pci != null) 
-            if(delete(pci.getId())) 
-                return indiceNomeSerie.delete(ParnomeID.hash(nome));
-        return false;
+            
+        ArrayList<ParNomeSerieId> ptis = indiceNomeSerie.read(new ParNomeSerieId(nome, -1));
+        if(ptis.size()>0) {
+            Serie[] series = new Serie[ptis.size()];
+            int i=0;
+            
+            for(ParNomeSerieId pti: ptis) 
+                series[i++] = read(pti.getId());
+            return series;
+        }
+        else 
+            return null;
     }
 
     @Override
     public boolean delete(int id) throws Exception {
-        Series c = super.read(id);
-        if(c != null) {
+        Serie s = read(id);   // na superclasse
+        if(s!=null) {
             if(super.delete(id))
-                return indiceNomeSerie.delete(ParnomeID.hash(c.getnome()));
+                return indiceNomeSerie.delete(new ParNomeSerieId(s.getNome(), id));
+        }
+        return false;
+    }
+
+    public boolean delete(String nome, int id) throws Exception {
+        ArquivoEpisodios arqEpisodios = new ArquivoEpisodios();
+        
+        Serie s = read(id); 
+        //verificar se a serie existe
+        if(s != null && s.getID() == id && s.getNome().equals(nome)){
+
+            System.out.println(s);
+           
+            //verificar episodios vinculados a serie
+           Episodio[] ids = arqEpisodios.readEpisodiosSerie(id); 
+          
+           //indices.readE(new ParIdId(id, -1));
+            
+            if(ids!= null){
+                
+                //excluir todos os episodios
+                boolean deletados = arqEpisodios.deleteEpisodioSerie(id);
+                //deletar a serie
+                if(deletados){
+                    return delete(id);
+                }
+            } 
+
+                return delete(id);
+            
         }
         return false;
     }
 
     @Override
-    public boolean update(Series novoSeries) throws Exception {
-        Series SeriesVelho = read(novoSeries.getnome());
-        if(super.update(novoSeries)) {
-            if(novoSeries.getnome().compareTo(SeriesVelho.getnome())!=0) {
-                indiceNomeSerie.delete(ParnomeID.hash(SeriesVelho.getnome()));
-                indiceNomeSerie.create(new ParnomeID(novoSeries.getnome(), novoSeries.getId()));
+    public boolean update(Serie novaSerie) throws Exception {
+        Serie s = read(novaSerie.getID());    // na superclasse
+        if(s!=null) {
+            if(super.update(novaSerie)) {
+                if(!s.getNome().equals(novaSerie.getNome())) {
+                    indiceNomeSerie.delete(new ParNomeSerieId(s.getNome(), s.getID()));
+                    indiceNomeSerie.create(new ParNomeSerieId(novaSerie.getNome(), s.getID()));
+                }
+                return true;
             }
+        }
+        return false;
+    }
+
+    //metodo para testar se ha serie vinculada ao id buscado
+    public static boolean serieExiste(int id) throws Exception{
+        ArquivoSeries arqSeries = new ArquivoSeries();
+        Serie s = arqSeries.read(id);   // na superclasse
+        if(s != null) {
             return true;
         }
         return false;
     }
 }
-
