@@ -1,6 +1,6 @@
 package Arquivo;
 import Entidades.Episodio;
-import Entidades.Serie;
+import Entidades.Series;
 
 import java.util.ArrayList;
 
