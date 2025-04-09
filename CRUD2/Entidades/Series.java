@@ -1,7 +1,11 @@
 package Entidades;
 import java.time.LocalDate;
 
-import aed3.Registro;
+import aed3.*;
+import Arquivo.*;
+import Entidades.*;
+import Menu.*;
+
 
 import java.io.IOException;
 import java.io.ByteArrayOutputStream;

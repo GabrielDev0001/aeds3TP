@@ -1,9 +1,8 @@
 package Arquivo;
+
 import aed3.*;
 import java.util.ArrayList;
-import Arquivo.*;
 import Entidades.*;
-import Menu.*;
 
 public class ArquivoEpisodios extends Arquivo<Episodio> {
 
@@ -120,16 +119,22 @@ public class ArquivoEpisodios extends Arquivo<Episodio> {
         }
     }
 
-    public boolean delete(int id) throws Exception{
-        Episodio e = read(id);
-
-        if (e != null) {
-            if (super.delete(id)) {
-                return indiceIndiretoIDEpisodio.delete(new ParaID(e.getIDSerie(), id))
-                && indiceNomeEpisodio.delete(new ParaNomeID(e.getNome(), id));
+    public boolean delete(String nome) throws Exception {
+        Integer id = indiceNomeEpisodio.read(nome);
+        
+        if (id != null) {
+            Episodio e = read(id);
+            
+            if (e != null) {
+                if (super.delete(id)) {
+                    return indiceIndiretoIDEpisodio.delete(new ParaID(e.getIDSerie(), id))
+                        && indiceNomeEpisodio.delete(new ParaNomeID(e.getNome(), id));
+                }
             }
         }
+        return false; 
     }
+    
 
     public boolean deleteEpisodioSerie(int id_serie) throws Exception{
 

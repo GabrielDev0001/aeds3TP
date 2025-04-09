@@ -1,10 +1,9 @@
 package Arquivo;
-import Entidades.Episodio;
-import Entidades.series;
+import Entidades.*;
 
 import java.util.ArrayList;
 
-import aeds3.*;
+import aed3.*;
 
 public class ArquivoSeries extends Arquivo<Serie> {
     
