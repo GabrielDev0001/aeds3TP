@@ -16,15 +16,14 @@ public class MenuSeries {
 
         int opcao;
         do {
-
-            System.out.println("\n\nAEDsIII");
+            System.out.println("PUCFlix 1.0");
             System.out.println("-------");
             System.out.println("> Início > Séries");
             System.out.println("\n1 - Buscar");
             System.out.println("2 - Incluir");
             System.out.println("3 - Alterar");
             System.out.println("4 - Excluir");
-            System.out.println("0 - Voltar");
+            System.out.println("0 - Voltar ao menu anterior");
 
             System.out.print("\nOpção: ");
             try {
