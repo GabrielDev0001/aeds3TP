@@ -1,4 +1,4 @@
-# 🎬 PUCFlix
+# 🎬 PUCFlix 1.0.0
 
 PUCFlix é um projeto desenvolvido para o Trabalho Prático 1 da disciplina de **Algoritmos e Estruturas de Dados 3 (AEDS 3)** na **PUC Minas**. Este sistema tem como objetivo gerenciar séries e seus episódios, utilizando estruturas de arquivos e índices, especificamente **Árvores B+** e **Tabela Hash Extensível**, para alcançar eficiência e organização.
 
@@ -66,9 +66,9 @@ O projeto segue o padrão arquitetural **MVC (Model-View-Controller)**, promoven
 - [x] Projeto original e completo
 
 ## 📝 Desafios Encontrados
-- Gabriel Henrique:
+- Gabriel Henrique: Implementar a Hash, junto com a programação em Java, a qual não praticava a tempos. 
 
-- Vitor Leite:
+- Vitor Leite: Desenvolver o CRUD em java.
 
 - Mateus Martins Parreiras: Implementar as árvores B+.
 
