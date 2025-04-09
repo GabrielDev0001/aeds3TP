@@ -124,6 +124,48 @@ public class MenuEpisodio {
         }
     }
 
+    public void excluirEpisodio() {
+        System.out.println("\nExclusão do Episodio");
+        String nome;
+        boolean nomeValido = false;
+
+        do {
+            System.out.print("\nnome: ");
+            nome = console.nextLine();  
+
+            if(nome.isEmpty())
+            return; 
+            else {
+                nomeValido = true;
+            }
+        } while (!nomeValido);
+
+        try {
+            Episodio episodio = arqEp.read(nome);
+            if (episodio != null) {
+                System.out.println("Episodio encontrado:");
+
+                System.out.print("\nConfirma a exclusão do Serie? (S/N) ");
+                char resp = console.nextLine().charAt(0);
+                if (resp == 'S' || resp == 's') {
+                    boolean excluido = arqSeries.delete(nome);  
+                    if (excluido) {
+                        System.out.println("Serie excluída com sucesso.");
+                    } else {
+                        System.out.println("Erro ao excluir a Serie.");
+                    }
+                } else {
+                    System.out.println("Exclusão cancelada.");
+                }
+            } else {
+                System.out.println("Serie não encontrada.");
+            }
+        } catch (Exception e) {
+            System.out.println("Erro do sistema. Não foi possível excluir a Serie!");
+            e.printStackTrace();
+        }
+    }
+
     public void buscarEpisodio() {
         System.out.println("\nBusca de Série");
         String nome;
