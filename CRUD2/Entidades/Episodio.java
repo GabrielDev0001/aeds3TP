@@ -8,13 +8,13 @@ import java.io.IOException;
 import java.time.LocalDate;
 
 public class Episodio {
-    private int id;
-    private String nome;
-    private float duracao; 
-    private int temporada; 
-    private int idSerie;
-    private float avaliacao;
-    private LocalDate dataLancamento;
+    public int id;
+    public String nome;
+    public float duracao; 
+    public int temporada; 
+    public int idSerie;
+    public float avaliacao;
+    public LocalDate dataLancamento;
 
     public Episodio(int id, String nome, LocalDate dataLancamento, float duracao, int temporada) {
         this.id = id;
