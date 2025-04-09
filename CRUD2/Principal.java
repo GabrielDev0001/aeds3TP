@@ -1,5 +1,5 @@
+import Menu.*;
 import java.util.Scanner;
-
 
 public class Principal {
 
@@ -28,10 +28,10 @@ public static void main(String[] args) {
 
             switch (opcao) {
                 case 1:
-                    (new MenuSeries()).menu();
+                    new MenuSeries().menu();
                     break;
                 case 2:
-                    (new MenuEpisodio()).menu();
+                    new MenuEpisodio().menu();
                 break;
                 case 0:
                     break;
