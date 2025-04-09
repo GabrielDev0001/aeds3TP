@@ -16,12 +16,13 @@ public class Episodio {
     public float avaliacao;
     public LocalDate dataLancamento;
 
-    public Episodio(int id, String nome, LocalDate dataLancamento, float duracao, int temporada) {
+    public Episodio(int id, String nome, LocalDate dataLancamento,float avaliacao, float duracao, int temporada) {
         this.id = id;
         this.nome = nome;
         this.dataLancamento = dataLancamento;
         this.duracao = duracao;
         this.temporada = temporada;
+        this.avaliacao = avaliacao;
     }
 
     public Episodio(int id, String nome, int temporada, LocalDate dataLancamento, float duracao) throws Exception {

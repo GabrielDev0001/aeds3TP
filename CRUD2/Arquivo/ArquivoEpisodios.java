@@ -1,8 +1,9 @@
 package Arquivo;
-import Entidades.Episodio;
-import Menu.ParaNomeID;
 import aed3.*;
 import java.util.ArrayList;
+import Arquivo.*;
+import Entidades.*;
+import Menu.*;
 
 public class ArquivoEpisodios extends Arquivo<Episodio> {
 
@@ -29,6 +30,19 @@ public class ArquivoEpisodios extends Arquivo<Episodio> {
             ".\\dados\\episodios\\indiceNome.d.db",   // diretório
             ".\\dados\\episodios\\indiceNome.c.db"    // cestos 
         );
+    }
+
+    public int getUltimoID() throws Exception {
+        int id = 0;
+        ArrayList<ParaID> locs = indiceIndiretoIDEpisodio.read(new ParaID(-1, -1));
+        if (locs.size() > 0) {
+            for (ParaID pID : locs) {
+                if (pID.getId_agregado() > id) {
+                    id = pID.getId_agregado();
+                }
+            }
+        }
+        return id;
     }
 
     @Override
