@@ -64,7 +64,7 @@ public class MenuSeries {
 
         do {
             System.out.print("\nNome: ");
-            nome = console.nextLine();  // Lê o CPF digitado pelo usuário
+            nome = console.nextLine();  
 
             if(nome.isEmpty())
                 return;
@@ -72,9 +72,9 @@ public class MenuSeries {
         } while (!nomeValido);
 
         try {
-            Serie Serie = arqSeries.read(nome);  // Chama o método de leitura da classe Arquivo
+            Serie Serie = arqSeries.read(nome);  
             if (Serie != null) {
-                mostraSerie(Serie);  // Exibe os detalhes do Serie encontrado
+                mostraSerie(Serie);  
             } else {
                 System.out.println("Serie não encontrado.");
             }
@@ -149,7 +149,7 @@ public class MenuSeries {
 
         do {
             System.out.print("\nnome: ");
-            nome = console.nextLine();  // Lê o nome digitado pelo usuário
+            nome = console.nextLine();  
 
             if(nome.isEmpty())
                 return; 
@@ -160,31 +160,29 @@ public class MenuSeries {
 
 
         try {
-            // Tenta ler o Serie com o nome fornecido
             Serie Serie = arqSeries.read(nome);
             if (Serie != null) {
                 System.out.println("Serie encontrado:");
-                mostraSerie(Serie);  // Exibe os dados do Serie para confirmação
+                mostraSerie(Serie);  
 
-                // Alteração de nome
                 System.out.print("\nNovo nome (deixe em branco para manter o anterior): ");
                 String novoNome = console.nextLine();
                 if (!novoNome.isEmpty()) {
-                    Serie.nome = novoNome;  // Atualiza o nome se fornecido
+                    Serie.nome = novoNome;  
                 }
 
-                // Alteração de sinopse
+
                 System.out.print("Nova sinopse (deixe em branco para manter o anterior): ");
                 String novoSinopse = console.nextLine();
                 if (!novoSinopse.isEmpty()) {
-                    Serie.sinopse = novoSinopse;  // Atualiza a sinopse se fornecido
+                    Serie.sinopse = novoSinopse;  
                 }
 
-                 // Alteração de stream
+
                  System.out.print("Novo stream (deixe em branco para manter o anterior): ");
                  String novoStream = console.nextLine();
                  if (!novoStream.isEmpty()) {
-                     Serie.stream = novoStream;  // Atualiza o stream se fornecido
+                     Serie.stream = novoStream;  
                  }
 
                 // Alteração de data de lancamento
@@ -231,7 +229,7 @@ public class MenuSeries {
 
         do {
             System.out.print("\nnome: ");
-            nome = console.nextLine();  // Lê o nome digitado pelo usuário
+            nome = console.nextLine();  
 
             if(nome.isEmpty())
             return; 
@@ -241,17 +239,14 @@ public class MenuSeries {
         } while (!nomeValido);
 
         try {
-            // Tenta ler o Serie com o ID fornecido
             Serie Serie = arqSeries.read(nome);
             if (Serie != null) {
                 System.out.println("Serie encontrada:");
-                mostraSerie(Serie);  // Exibe os dados do Serie para confirmação
 
                 System.out.print("\nConfirma a exclusão do Serie? (S/N) ");
-                char resp = console.next().charAt(0);  // Lê a resposta do usuário
 
                 if (resp == 'S' || resp == 's') {
-                    boolean excluido = arqSeries.delete(nome);  // Chama o método de exclusão no arquivo
+                    boolean excluido = arqSeries.delete(nome);  
                     if (excluido) {
                         System.out.println("Serie excluída com sucesso.");
                     } else {
