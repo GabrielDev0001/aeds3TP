@@ -1,6 +1,6 @@
-package modelo;
-import entidades.Episodio;
-import entidades.Serie;
+package Arquivo;
+import Entidades.Episodio;
+import Entidades.Serie;
 
 import java.util.ArrayList;
 
