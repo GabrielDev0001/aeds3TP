@@ -11,8 +11,10 @@ v1.0 - 2021
 package aed3;
 
 import java.io.IOException;
+import java.text.Normalizer;
+import java.util.regex.Pattern;
 
-public interface RegistroArvoreBMais<T> {
+public interface RegistroArvoreBMais<T> extends Comparable<T>{
 
   public short size(); // tamanho FIXO do registro
 
@@ -25,3 +27,6 @@ public interface RegistroArvoreBMais<T> {
   public T clone(); // clonagem de objetos
 
 }
+
+
+

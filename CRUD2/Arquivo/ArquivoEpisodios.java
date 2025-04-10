@@ -119,18 +119,15 @@ public class ArquivoEpisodios extends Arquivo<Episodio> {
         }
     }
 
-    public boolean delete(String nome) throws Exception {
-        int id = indiceNomeEpisodio.read(nome);
+    public boolean delete(int id) throws Exception {
+        Episodio ep = read(id);
         
-        if (id != null) {
+        if (ep != null) {
             Episodio e = read(id);
-            
-            if (e != null) {
                 if (super.delete(id)) {
                     return indiceIndiretoIDEpisodio.delete(new ParaID(e.getIDSerie(), id))
                         && indiceNomeEpisodio.delete(new ParaNomeID(e.getNome(), id));
                 }
-            }
         }
         return false; 
     }
