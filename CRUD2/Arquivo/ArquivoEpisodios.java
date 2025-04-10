@@ -1,194 +1,171 @@
 package Arquivo;
-
 import aed3.*;
-import java.util.ArrayList;
 import Entidades.*;
+
+import java.util.ArrayList;
 
 public class ArquivoEpisodios extends Arquivo<Episodio> {
 
-    Arquivo<Episodio> arqEpisodio;
-    ArvoreBMais<ParaID> indiceIndiretoIDEpisodio;
-    ArvoreBMais<ParaNomeID> indiceNomeEpisodio;
+  Arquivo<Episodio> arqEpisodio;
+  ArvoreBMais <ParIdId> indiceIdEpiIdSerie;
+  ArvoreBMais <ParNomeIdEpi> indiceNomeEpisodio;
+
+  public ArquivoEpisodios() throws Exception {
+    super("episodio", Episodio.class.getConstructor());
+
+    indiceIdEpiIdSerie = new ArvoreBMais<>(
+      ParIdId.class.getConstructor(),
+      5,
+      "./dados/"+ arqEpisodio +"/indiceIdEpisodios_IdSerie.db"
+    );
+
+    indiceNomeEpisodio = new ArvoreBMais<>(
+      ParNomeIdEpi.class.getConstructor(),
+      5,
+      "./dados/"+ arqEpisodio +"/indiceNomeEpisodios.db"
+    );
+  }
+
+  @Override
+  public int create(Episodio e) throws Exception{
 
 
-    public ArquivoEpisodioHash() throws Exception {
-        super("episodio", Episodio.class.getConstructor());
-        indiceIndiretoIDEpisodio = new HashExtensivel<>(
-            ParaID.class.getConstructor(), 
-            4, 
-            ".\\dados\\episodios\\indiceID.d.db",   // diretório
-            ".\\dados\\episodios\\indiceID.c.db"    // cestos 
-        );
+    if(ArquivoSeries.serieExiste(e.getIDSerie()) == false){
+      throw new Exception("Episodio não pode ser criado pois a serie vinculada não existe");
     }
 
-    public ArquivoEpisodiosArvore() throws Exception {
-        super("episodios", Episodio.class.getConstructor());
-        indiceNomeEpisodio = new HashExtensivel<>(
-            ParaNomeID.class.getConstructor(), 
-            4, 
-            ".\\dados\\episodios\\indiceNome.d.db",   // diretório
-            ".\\dados\\episodios\\indiceNome.c.db"    // cestos 
-        );
-    }
-
-    public int getUltimoID() throws Exception {
-        int id = 0;
-        ArrayList<ParaID> locs = indiceIndiretoIDEpisodio.read(new ParaID(-1, -1));
-        if (locs.size() > 0) {
-            for (ParaID pID : locs) {
-                if (pID.getId_agregado() > id) {
-                    id = pID.getId_agregado();
-                }
-            }
-        }
-        return id;
-    }
-
-    @Override
-    public int create(Episodio e) throws Exception {
-        if(Arquivo.Series.serieExiste(e.getIDSerie()) == false) {
-            throw new Exception("Episodio não pode ser criado pois a série vinculada não existe.");
-        }
-
-        int id = super.create(e);
-
-        indiceIndiretoIDEpisodio.create(new ParaID(e.getIDSerie(), id));
-        indiceNomeEpisodio.create(new ParaNomeID(e.getNome(), id));
-
-        return id;
-    }
-
-    public Episodio[] readNomeEpisodio(String nome) throws Exception {
-        if(nome.length() == 0) {
-            return null;
-        }
-
-        ArrayList<ParaNomeID> docs = indiceNomeEpisodio.read(new ParaNomeID(nome, -1));
-        if (docs.size() > 0) {
-            Episodio[] episodios = new Episodio[docs.size()];
-            int i = 0;
-            for(ParaNomeID doc: docs) {
-                episodios[i++] = read(doc.getId());
-            }
-            return episodios;
-        }
-        else {
-            return null;
-        }
-    }
+    int id = super.create(e);
     
-    public Episodio[] lerNomeEpisodioPorSerie(String nome, int idSerie) throws Exception {
-        if (nome.length() == 0) {
-            return null;
-        }
+    indiceIdEpiIdSerie.create(new ParIdId(e.getIDSerie() , id));
+    indiceNomeEpisodio.create(new ParNomeIdEpi(e.getNome(), id));
 
-        ArrayList<ParaNomeID> docs = indiceNomeEpisodio.read(new ParaNomeID(nome, -1));
-        if (docs.size() > 0) {
-            Episodio[] episodios = new Episodio[docs.size()];
-            int i = 0;
-            for (ParaNomeID doc : docs) {
-                episodios[i++] = read(doc.getId());
-            }
+    return id;
+  }
 
-            ArrayList<Episodio> episodiosSerie = new ArrayList<>();
 
-            for (Episodio e : episodios) {
-                if (e.getIDSerie() == idSerie) {
-                    episodiosSerie.add(e);
-                }
-            }
-            return episodiosSerie.toArray(new Episodio[episodiosSerie.size()]);
-        } else {
-            return null;
-        }
-    }
 
-    public Episodio[] readEpisodiosSerie(int idSerie) throws Exception{
-        ArrayList<ParaID> locs = indiceIndiretoIDEpisodio.read(new ParaID(idSerie, -1));
+  public Episodio[] readNomeEpisodio(String nome) throws Exception{
+    if(nome.length() == 0)
+      return null;
 
-        if (locs.size() > 0) {
-            Episodio[] episodios = new Episodio[locs.size()];
-            int i = 0;
+    ArrayList<ParNomeIdEpi> docs = indiceNomeEpisodio.read(new ParNomeIdEpi(nome, -1));
+    if(docs.size() > 0){
+      Episodio[] episodios = new Episodio[docs.size()];
+      int i = 0;
+      for(ParNomeIdEpi doc: docs)
+        episodios[i++] = read(doc.getId());
+      return episodios;
 
-            for (ParaID pID : locs) {
-                episodios[i++] = read(pID.getId_agregado());
-            }
-            return episodios;
-        } else {
-            return null;
-        }
-    }
+    }else
+      return null;
+  }
 
-    public boolean delete(int id) throws Exception {
-        Episodio ep = read(id);
-        
-        if (ep != null) {
-            Episodio e = read(id);
-                if (super.delete(id)) {
-                    return indiceIndiretoIDEpisodio.delete(new ParaID(e.getIDSerie(), id))
-                        && indiceNomeEpisodio.delete(new ParaNomeID(e.getNome(), id));
-                }
-        }
-        return false; 
-    }
-    
+  public Episodio[] lerNomeEpisodioPorSerie(String nome, int id_serie) throws Exception{
+    if(nome.length() == 0)
+      return null;
 
-    public boolean deleteEpisodioSerie(int id_serie) throws Exception{
+    ArrayList<ParNomeIdEpi> docs = indiceNomeEpisodio.read(new ParNomeIdEpi(nome, -1));
+    if(docs.size() > 0){
+      Episodio[] episodios = new Episodio[docs.size()];
+      int i = 0;
+      for(ParNomeIdEpi doc: docs)
+        episodios[i++] = read(doc.getId());
 
-        ArrayList<ParaID> pIds = indiceIndiretoIDEpisodio.read(new ParaID(id_serie, -1));
-    
-        System.out.println("Quantidade de episódios da serie deletados: " + pIds.size());
-    
-        if(pIds.size() > 0){
-          for(ParaID pID : pIds)
-            delete(pID.getId_agregado());
-          return true;
-        } 
-        return false;
+      ArrayList<Episodio> episodiosSerie = new ArrayList<>();
+
+      // Verifica se o episodio pertence a serie
+      for(Episodio e : episodios){
+        if(e.getIDSerie() == id_serie)
+          episodiosSerie.add(e);
       }
-    
-      @Override
-      public boolean update(Episodio novoEpisodio) throws Exception{
-        Episodio e = read(novoEpisodio.getId());
-        if(e != null){
-          if(super.update(novoEpisodio)){
-            if(!e.getNome().equals(novoEpisodio.getNome())){
-              indiceNomeEpisodio.delete(new ParaNomeID(e.getNome(), e.getId()));
-              indiceNomeEpisodio.create(new ParaNomeID(novoEpisodio.getNome(), e.getId()));
-            }
-    
-            if(e.getIDSerie() != novoEpisodio.getIDSerie()){
-              indiceIndiretoIDEpisodio.delete(new ParaID(e.getIDSerie()), e.getIDSerie());
-              indiceIndiretoIDEpisodio.create(new ParaID(novoEpisodio.getIDSerie()), e.getId());
-            }
-            return true;
-          }
-        }
-        return false;
-      }
-    
-    
-     
-      public float avaliacaoMediaSerie(int id_serie) throws Exception{
-        
-        float soma = 0;
-        
-        ArrayList<ParaID> pIds = indiceIndiretoIDEpisodio.read(new ParaID(id_serie, -1));
-        if(pIds.size() > 0){
-            Episodio[] episodios = new Episodio[pIds.size()];
-            int i = 0;
-    
-            for(ParaID pID : pIds){
-                episodios[i++] = read(pID.getId_agregado());
-                soma += episodios[i-1].getAvaliacao();
-            }
-            return soma / episodios.length;
-        }
-        else
-          return 0;
-    }
 
-    Episodio read() {
-        Episodio x;
+      return episodiosSerie.toArray(new Episodio[episodiosSerie.size()]);
+    }else
+      return null;
+  }
+  
+  public Episodio[] readEpisodiosSerie(int id_serie) throws Exception{
+    
+    // Metodo para verificar se a serie vinculada ao episodio existe
+    ArrayList<ParIdId> locs = indiceIdEpiIdSerie.read(new ParIdId(id_serie, -1));
+  
+    if(locs.size() > 0){
+      Episodio[] episodios = new Episodio[locs.size()];
+      int i = 0;
+      for(ParIdId loc : locs){
+        episodios[i++] = read(loc.getId_agregado());
+      }
+      return episodios;
+    }else{
+      return null;
     }
+  }
+
+  @Override
+  public boolean delete(int id) throws Exception{
+    Episodio e = read(id);
+    if(e != null){
+      if(super.delete(id))
+        return indiceIdEpiIdSerie.delete(new ParIdId(e.getIDSerie(), id)) 
+            && indiceNomeEpisodio.delete(new ParNomeIdEpi(e.getNome(), id));
+    }
+    return false;
+  }
+
+  public boolean deleteEpisodioSerie(int id_serie) throws Exception{
+
+    // Metodo para verificar se a serie vinculada ao episodio existe ordem id_serie -1 é ao contrario?
+    ArrayList<ParIdId> locs = indiceIdEpiIdSerie.read(new ParIdId(id_serie, -1));
+
+    System.out.println("Quantidade de episódios da serie deletados: " + locs.size());
+
+    if(locs.size() > 0){
+      for(ParIdId loc : locs)
+        delete(loc.getId_agregado());
+      return true;
+    } 
+    return false;
+  }
+
+  @Override
+  public boolean update(Episodio novoEpisodio) throws Exception{
+    Episodio e = read(novoEpisodio.getId());
+    if(e != null){
+      if(super.update(novoEpisodio)){
+        if(!e.getNome().equals(novoEpisodio.getNome())){
+          indiceNomeEpisodio.delete(new ParNomeIdEpi(e.getNome(), e.getId()));
+          indiceNomeEpisodio.create(new ParNomeIdEpi(novoEpisodio.getNome(), e.getId()));
+        }
+
+        if(e.getIDSerie() != novoEpisodio.getIDSerie()){
+          indiceIdEpiIdSerie.delete(new ParIdId(e.getIDSerie(), e.getId()));
+          indiceIdEpiIdSerie.create(new ParIdId(novoEpisodio.getIDSerie(), e.getId()));
+        }
+
+        return true;
+      }
+    }
+    return false;
+  }
+
+
+ 
+  public float avaliacaoMediaSerie(int id_serie) throws Exception{
+    
+    float soma = 0;
+    
+    ArrayList<ParIdId> locs = indiceIdEpiIdSerie.read(new ParIdId(id_serie, -1));
+    if(locs.size() > 0){
+    Episodio[] episodios = new Episodio[locs.size()];
+    int i = 0;
+    for(ParIdId loc : locs){
+        episodios[i++] = read(loc.getId_agregado());
+        soma += episodios[i-1].getAvaliacao();
+    }
+        return soma / episodios.length;
+    }else
+      return 0;
+}
+
+
 }
