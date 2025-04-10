@@ -174,16 +174,34 @@ public class MenuEpisodio {
 
             if(nome.isEmpty())
                 return;
-            else nomeValido =true;
+            else nomeValido = true;
         } while (!nomeValido);
 
         try {
-            Episodio episodio = arqEp.read(nome);  
-            if (episodio != null) {
-                mostraEpisodio(episodio); 
-            } else {
-                System.out.println("Episodio não encontrado.");
+            Series[] s = arqSeries.readNome(nome);
+            for (int i = 0; i < s.length; i++) {
+                System.out.println(i + " " + s[i].getNome());
             }
+            System.out.println("Digite o numero: ");
+            int numSerie = console.nextInt();
+            Episodio[] e = arqEp.readEpisodiosSerie(s[numSerie].getId());
+            System.out.println("Digite o nome do episodio: ");
+            String nomeEp = console.nextLine();
+            boolean resp = false;
+            for(int i = 0; i < e.length; i++) {
+                if (e[i].getNome().equals(nomeEp)) {
+                    System.out.println("Episodio encontrado!");
+                    resp = true;
+                    break;
+                }
+            }
+
+            if(!resp) {
+                System.out.println("Ep nao encontrado");
+            }
+    
+
+
         } catch(Exception e) {
             System.out.println("Erro do sistema. Não foi possível buscar o Episodio!");
             e.printStackTrace();
@@ -210,7 +228,7 @@ public class MenuEpisodio {
 
 
         try {
-            Episodio episodio = arqEp.read(nome);
+            Episodio[] episodio = arqEp.read(nome);
             if (episodio != null) {
                 System.out.println("Episodio encontrado:");
                 mostraEpisodio(episodio);  
