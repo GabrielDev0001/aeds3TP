@@ -7,11 +7,16 @@ import java.time.format.DateTimeFormatter;
 import javax.sound.midi.Soundbank;
 import Arquivo.*;
 
+import com.sun.org.apache.xpath.internal.SourceTree;
+import com.sun.source.doctree.IdentifierTree;
+
 
 public class MenuEpisodio {
     ArquivoEpisodios arqEp;
     ArquivoSeries arqSeries;
     private static Scanner console = new Scanner(System.in);
+
+
 
     public MenuEpisodio() throws Exception {
         arqEp = new ArquivoEpisodios();
@@ -126,44 +131,27 @@ public class MenuEpisodio {
 
     public void excluirEpisodio() {
         System.out.println("\nExclusão do Episodio");
-        String nome;
         boolean nomeValido = false;
+        System.out.print("\nDigite o nome da série: ");
 
-        do {
-            System.out.print("\nnome: ");
-            nome = console.nextLine();  
-
-            if(nome.isEmpty())
-            return; 
-            else {
-                nomeValido = true;
-            }
-        } while (!nomeValido);
+        String nome = console.nextLine();
 
         try {
-            Episodio episodio = arqEp.read(nome);
-            if (episodio != null) {
-                System.out.println("Episodio encontrado:");
+            Series[] s = arqSeries.readNome(nome);
+            for (int i = 0; i < s.length; i++) {
+                System.out.println(i + " " + s[i].getNome());
+            }   
+            int numSerie = console.nextInt();
+            Episodio[] e = arqEp.readEpisodiosSerie(s[numSerie].getId());
 
-                System.out.print("\nConfirma a exclusão do Serie? (S/N) ");
-                char resp = console.nextLine().charAt(0);
-                if (resp == 'S' || resp == 's') {
-                    boolean excluido = arqSeries.delete(nome);  
-                    if (excluido) {
-                        System.out.println("Serie excluída com sucesso.");
-                    } else {
-                        System.out.println("Erro ao excluir a Serie.");
-                    }
-                } else {
-                    System.out.println("Exclusão cancelada.");
-                }
-            } else {
-                System.out.println("Serie não encontrada.");
+            for (int i = 0; i < e.length; i++) {
+                System.out.println(i + " " + e[i].getNome());
             }
-        } catch (Exception e) {
-            System.out.println("Erro do sistema. Não foi possível excluir a Serie!");
-            e.printStackTrace();
+        } 
+        catch (Exception e) {
         }
+
+           
     }
 
     public void buscarEpisodio() {
