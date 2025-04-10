@@ -72,15 +72,22 @@ public class MenuSeries {
 
             if(nome.isEmpty())
                 return;
-            else nomeValido =true;
+            else nomeValido = true;
         } while (!nomeValido);
 
         try {
-            Series Serie = arqSeries.read(nome);  
+            boolean encontrou = false;
+            Series[] Serie = arqSeries.readNome(nome);  
             if (Serie != null) {
-                mostraSerie(Serie);  
-            } else {
-                System.out.println("Serie não encontrado.");
+                for(int i = 0; i < Serie.length; i++) {
+                    if (Serie[i].getNome().equals(nome)) {
+                        System.out.println("Serie encontrada");
+                        encontrou = true;
+                    }
+                }   
+                if (!encontrou) {
+                    System.out.println("Serie não encontrada");
+                } 
             }
         } catch(Exception e) {
             System.out.println("Erro do sistema. Não foi possível buscar a Serie!");
@@ -146,7 +153,7 @@ public class MenuSeries {
         }
     }
 
-    public void alterarSerie() throws Exception {
+    public void alterarSerie() {
         System.out.println("\nAlteração de Série");
 
         System.out.print("Nome da Série: ");
@@ -238,25 +245,22 @@ public class MenuSeries {
         } while (!nomeValido);
 
         try {
-            Series serie = arqSeries.readNome(nome);
+            Series[] serie = arqSeries.readNome(nome);
             if (serie != null) {
-                System.out.println("Serie encontrada:");
-
-                System.out.print("\nConfirma a exclusão do Serie? (S/N) ");
-                char resp = console.nextLine().charAt(0);
-
-                if (resp == 'S' || resp == 's') {
-                    boolean excluido = arqSeries.delete(nome, serie.getId());  
-                    if (excluido) {
-                        System.out.println("Serie excluída com sucesso.");
-                    } else {
-                        System.out.println("Erro ao excluir a Serie.");
-                    }
-                } else {
-                    System.out.println("Exclusão cancelada.");
+                for(int i = 0; i < serie.length; i++) {
+                    System.out.println(i + " " + serie[i].getNome());
                 }
-            } else {
-                System.out.println("Serie não encontrada.");
+                System.out.println("Digite o numero: ");
+                int numSerie = console.nextInt();
+
+                boolean excluido = arqSeries.delete(serie[numSerie].getId());
+
+                if (excluido) {
+                    System.out.println("Serie excluida com êxito!");
+                }
+                else {
+                    System.out.println("Nao foi possivel excluir a série.");
+                }
             }
         } catch (Exception e) {
             System.out.println("Erro do sistema. Não foi possível excluir a Serie!");
