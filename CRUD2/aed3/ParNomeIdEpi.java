@@ -21,22 +21,22 @@ import java.nio.charset.StandardCharsets;
 import java.text.Normalizer;
 import java.util.regex.Pattern;
 
-public class ParaNomeID implements RegistroArvoreBMais<ParaNomeID> {
+public class ParNomeIdEpi implements RegistroArvoreBMais<ParNomeIdEpi> {
 
   private String titulo;
   private int id;
   private short TAMANHO = 34;
   private short TAMANHO_TITULO = 30;
 
-  public ParaNomeID() throws Exception {
+  public ParNomeIdEpi() throws Exception {
     this("", -1);
   }
 
-  public ParaNomeID(String n) throws Exception {
+  public ParNomeIdEpi(String n) throws Exception {
     this(n, -1);
   }
 
-  public ParaNomeID(String t, int i) throws Exception {
+  public ParNomeIdEpi(String t, int i) throws Exception {
 
     if(!t.isEmpty()) {
 
@@ -77,9 +77,9 @@ public class ParaNomeID implements RegistroArvoreBMais<ParaNomeID> {
   }
 
   @Override
-  public ParaNomeID clone() {
+  public ParNomeIdEpi clone() {
     try {
-      return new ParaNomeID(this.titulo, this.id);
+      return new ParNomeIdEpi(this.titulo, this.id);
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -90,7 +90,7 @@ public class ParaNomeID implements RegistroArvoreBMais<ParaNomeID> {
     return this.TAMANHO;
   }
 
-  public int compareTo(ParaNomeID a) {
+  public int compareTo(ParNomeIdEpi a) {
     String str1 = transforma(this.titulo);
     String str2 = transforma(a.titulo);
 

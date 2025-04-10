@@ -11,8 +11,6 @@ v1.0 - 2021
 package aed3;
 
 import java.io.IOException;
-import java.text.Normalizer;
-import java.util.regex.Pattern;
 
 public interface RegistroArvoreBMais<T> extends Comparable<T>{
 
