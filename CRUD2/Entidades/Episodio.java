@@ -7,7 +7,9 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.time.LocalDate;
 
-public class Episodio {
+import aed3.Registro;
+
+public class Episodio  implements Registro{
     public int id;
     public String nome;
     public float duracao; 
@@ -16,13 +18,13 @@ public class Episodio {
     public float avaliacao;
     public LocalDate dataLancamento;
 
-    public Episodio(int id, String nome, LocalDate dataLancamento,float avaliacao, float duracao, int temporada) {
-        this.id = id;
+    public Episodio( String nome, LocalDate dataLancamento,float avaliacao, float duracao, int temporada, int idSerie) {
         this.nome = nome;
         this.dataLancamento = dataLancamento;
         this.duracao = duracao;
         this.temporada = temporada;
         this.avaliacao = avaliacao;
+        this.idSerie = idSerie;
     }
 
     public Episodio(int id, String nome, int temporada, LocalDate dataLancamento, float duracao) throws Exception {

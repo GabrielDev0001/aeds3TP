@@ -16,7 +16,6 @@ public class MenuEpisodio {
     private static Scanner console = new Scanner(System.in);
 
 
-
     public MenuEpisodio() throws Exception {
         arqEp = new ArquivoEpisodios();
         arqSeries = new ArquivoSeries();
@@ -62,14 +61,42 @@ public class MenuEpisodio {
     }
 
     public void incluirEpisodio() {
-        System.out.println("\nInclusão de Serie");
+        System.out.println("\nInclusão de Episodio");
         String nome = "";
         float duracao = 0;
         float avaliacao = 0;
         LocalDate dataLancamento = null;
         int temporada = 0;
+        int IDserie = 0;
         boolean dadosCorretos = false;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        //Descobre a serie que o usuario vai utilizar
+        System.out.println("\nBusca de Série");
+        String descobre;
+        boolean nomeserieValido = false;
+     
+        do {
+            System.out.print("\nDigite o nome: ");
+            descobre = console.nextLine();  
+     
+            if(descobre.isEmpty())
+                return;
+            else nomeserieValido = true;
+        } while (!nomeserieValido);
+     
+        try {
+            Series[] s = arqSeries.readNome(descobre);
+            for (int i = 0; i < s.length; i++) {
+                System.out.println(i + " " + s[i].getNome());
+            }
+            System.out.println("Digite o numero: ");
+            int numSerie = console.nextInt();
+            IDserie = s[numSerie].getId();
+        }catch (Exception e) {
+            System.out.println("Erro ao buscar a série: " + e.getMessage());
+        }
+     
 
         do {
             System.out.print("\nNome (min. de 4 letras ou vazio para cancelar): ");
@@ -117,8 +144,8 @@ public class MenuEpisodio {
         char resp = console.nextLine().charAt(0);
         if(resp=='S' || resp=='s') {
             try {
-                int idEpisodio = arqEp.getUltimoID(); // Atribui o ID da série ao episódio
-                Episodio c = new Episodio(idEpisodio, nome, dataLancamento, avaliacao, duracao ,temporada);
+
+                Episodio c = new Episodio(nome, dataLancamento, avaliacao, duracao ,temporada, IDserie);
 
                 arqEp.create(c);
                 System.out.println("Série incluída com sucesso.");
@@ -130,7 +157,7 @@ public class MenuEpisodio {
 
     public void excluirEpisodio() {
         System.out.println("\nExclusão do Episodio");
-        boolean nomeValido = false;
+      //  boolean nomeValido = false;
         System.out.print("\nDigite o nome da série: ");
 
         String nome = console.nextLine();
@@ -232,7 +259,7 @@ public class MenuEpisodio {
             for (int i = 0; i < s.length; i++) {
                 System.out.println(i + " " + s[i].getNome());
             }
-            int numSerie = console.nextInt();
+        //    int numSerie = console.nextInt();
             
 
 

@@ -19,7 +19,7 @@ public class Series implements Registro {
         this(-1, "", "", LocalDate.now(),"");
     }
     public Series(String n, String c, LocalDate d, String s) {
-        this(-1, n, s, d, s);
+        this(-1, n, c, d, s);
     }
 
     public Series(int i, String n, String c, LocalDate d, String s) {
