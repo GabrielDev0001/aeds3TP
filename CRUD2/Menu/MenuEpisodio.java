@@ -211,12 +211,12 @@ public class MenuEpisodio {
 
 
     public void alterarEpisodio() {
-        System.out.println("\nAlteração do Episodio:");
+        System.out.println("\nAlteração do Episodio");
         String nome;
         boolean nomeValido = false;
 
         do {
-            System.out.print("\nnome: ");
+            System.out.print("\nnome da série: ");
             nome = console.nextLine();  
 
             if(nome.isEmpty())
@@ -228,63 +228,14 @@ public class MenuEpisodio {
 
 
         try {
-            Episodio[] episodio = arqEp.read(nome);
-            if (episodio != null) {
-                System.out.println("Episodio encontrado:");
-                mostraEpisodio(episodio);  
-
-                System.out.print("\nNovo nome (deixe em branco para manter o anterior): ");
-                String novoNome = console.nextLine();
-                if (!novoNome.isEmpty()) {
-                    episodio.nome = novoNome;  
-                }
-
-
-                System.out.print("Nova duração (deixe em branco para manter o anterior): ");
-                float novaDuracao = console.nextFloat();
-                if(novaDuracao > 0) {
-                    episodio.duracao = novaDuracao;  
-                }
-                 System.out.print("Nova temporada (deixe em branco para manter o anterior): ");
-                 int novoTemporada = console.nextInt();
-                 if (novaDuracao > 0) {
-                     episodio.temporada = novoTemporada;  
-                 }
-
-                 System.out.print("Nova avaliacao (deixe em branco para manter o anterior): ");
-                 float novaAvaliacao = console.nextFloat();
-                 if (novaDuracao > 0) {
-                     episodio.avaliacao = novaAvaliacao;  
-                 }
-
-                System.out.print("Nova data de lançamento (DD/MM/AAAA) (deixe em branco para manter a anterior): ");
-                String novaDataStr = console.nextLine();
-                if (!novaDataStr.isEmpty()) {
-                    try {
-                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                        episodio.dataLancamento = LocalDate.parse(novaDataStr, formatter);  // Atualiza a data de lancamento se fornecida
-                    } catch (Exception e) {
-                        System.err.println("Data inválida. Valor mantido.");
-                    }
-                }
-
-                // Confirmação da alteração
-                System.out.print("\nConfirma as alterações? (S/N) ");
-                char resp = console.next().charAt(0);
-                if (resp == 'S' || resp == 's') {
-                    // Salva as alterações no arquivo
-                    boolean alterado = arqSeries.update(episodio);
-                    if (alterado) {
-                        System.out.println("Episodio alterado com sucesso.");
-                    } else {
-                        System.out.println("Erro ao alterar o Episodio.");
-                    }
-                } else {
-                    System.out.println("Alterações canceladas.");
-                }
-            } else {
-                System.out.println("Episodio não encontrada.");
+            Series[] s = arqSeries.readNome(nome);
+            for (int i = 0; i < s.length; i++) {
+                System.out.println(i + " " + s[i].getNome());
             }
+            int numSerie = console.nextInt();
+            
+
+
         } catch (Exception e) {
             System.out.println("Erro do sistema. Não foi possível alterar o Episodio!");
             e.printStackTrace();
