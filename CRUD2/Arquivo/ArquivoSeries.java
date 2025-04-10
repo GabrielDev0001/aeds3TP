@@ -1,42 +1,43 @@
 package Arquivo;
 import Entidades.*;
+import aed3.ParNomeSerieId;
 
 import java.util.ArrayList;
 
 import aed3.*;
 
-public class ArquivoSeries extends Arquivo<Serie> {
+public class ArquivoSeries extends Arquivo<Series> {
     
-    Arquivo<Serie> arqSeries;
-    ArvoreBMais<ParNomeIdSerie> indiceNomeSerie;
+    Arquivo<Series> arqSeries;
+    ArvoreBMais<ParNomeSerieId> indiceNomeSerie;
     ArvoreBMais <ParIdId> indices;
 
     public ArquivoSeries() throws Exception {
-        super("series", Serie.class.getConstructor());
+        super("series", Series.class.getConstructor());
         
-        indiceNomeSerie = new ArvoreBMais<>(
-            ParNomeIdSerie.class.getConstructor(), 
+            indiceNomeSerie = new ArvoreBMais<>(
+            ParNomeSerieId.class.getConstructor(), 
             5, 
-            "./dados/"+nomeEntidade+"/indiceNomeSerie.d.db");
+            "./dados/"+ arqSeries +"/indiceNomeSerie.d.db");
     }
 
     @Override
-    public int create(Serie s) throws Exception {
+    public int create(Series s) throws Exception {
         int id = super.create(s);
-        indiceNomeSerie.create(new ParNomeIdSerie(s.getNome(), id));
+        indiceNomeSerie.create(new ParNomeSerieId(s.getNome(), id));
         return id;
     }
  
-    public Serie[] readNome(String nome) throws Exception {
+    public Series[] readNome(String nome) throws Exception {
         if(nome.length()==0)
             return null;
             
-        ArrayList<ParNomeIdSerie> ptis = indiceNomeSerie.read(new ParNomeIdSerie(nome, -1));
+        ArrayList<ParNomeSerieId> ptis = indiceNomeSerie.read(new ParNomeSerieId(nome, -1));
         if(ptis.size()>0) {
-            Serie[] series = new Serie[ptis.size()];
+            Series[] series = new Series[ptis.size()];
             int i=0;
             
-            for(ParNomeIdSerie pti: ptis) 
+            for(ParNomeSerieId pti: ptis) 
                 series[i++] = read(pti.getId());
             return series;
         }
@@ -47,10 +48,10 @@ public class ArquivoSeries extends Arquivo<Serie> {
 
     @Override
     public boolean delete(int id) throws Exception {
-        Serie s = read(id);   // na superclasse
+        Series s = read(id);   // na superclasse
         if(s!=null) {
             if(super.delete(id))
-                return indiceNomeSerie.delete(new ParNomeIdSerie(s.getNome(), id));
+                return indiceNomeSerie.delete(new ParNomeSerieId(s.getNome(), id));
         }
         return false;
     }
@@ -58,9 +59,9 @@ public class ArquivoSeries extends Arquivo<Serie> {
     public boolean delete(String nome, int id) throws Exception {
         ArquivoEpisodios arqEpisodios = new ArquivoEpisodios();
         
-        Serie s = read(id); 
+        Series s = read(id); 
         //verificar se a serie existe
-        if(s != null && s.getID() == id && s.getNome().equals(nome)){
+        if(s != null && s.getId() == id && s.getNome().equals(nome)){
 
             System.out.println(s);
            
@@ -86,13 +87,13 @@ public class ArquivoSeries extends Arquivo<Serie> {
     }
 
     @Override
-    public boolean update(Serie novaSerie) throws Exception {
-        Serie s = read(novaSerie.getID());    // na superclasse
+    public boolean update(Series novaSerie) throws Exception {
+        Series s = read(novaSerie.getId());    // na superclasse
         if(s!=null) {
             if(super.update(novaSerie)) {
                 if(!s.getNome().equals(novaSerie.getNome())) {
-                    indiceNomeSerie.delete(new ParNomeIdSerie(s.getNome(), s.getID()));
-                    indiceNomeSerie.create(new ParNomeIdSerie(novaSerie.getNome(), s.getID()));
+                    indiceNomeSerie.delete(new ParNomeSerieId(s.getNome(), s.getId()));
+                    indiceNomeSerie.create(new ParNomeSerieId(novaSerie.getNome(), s.getId()));
                 }
                 return true;
             }
@@ -103,7 +104,7 @@ public class ArquivoSeries extends Arquivo<Serie> {
     //metodo para testar se ha serie vinculada ao id buscado
     public static boolean serieExiste(int id) throws Exception{
         ArquivoSeries arqSeries = new ArquivoSeries();
-        Serie s = arqSeries.read(id);   // na superclasse
+        Series s = arqSeries.read(id);   // na superclasse
         if(s != null) {
             return true;
         }

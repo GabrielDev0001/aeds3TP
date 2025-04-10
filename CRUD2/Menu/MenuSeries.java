@@ -146,83 +146,89 @@ public class MenuSeries {
         }
     }
 
-    public void alterarSerie() {
+    public void alterarSerie() throws Exception {
         System.out.println("\nAlteração de Série");
-        String nome;
-        boolean nomeValido = false;
 
-        do {
-            System.out.print("\nnome: ");
-            nome = console.nextLine();  
-
-            if(nome.isEmpty())
-                return; 
-            else {
-                nomeValido = true;
-            }
-        } while (!nomeValido);
-
+        System.out.print("Nome da Série: ");
+        String nome = console.nextLine();
+        System.out.println();
 
         try {
-            Series Serie = arqSeries.read(nome);
-            if (Serie != null) {
-                System.out.println("Serie encontrado:");
-                mostraSerie(Serie);  
-
-                System.out.print("\nNovo nome (deixe em branco para manter o anterior): ");
-                String novoNome = console.nextLine();
-                if (!novoNome.isEmpty()) {
-                    Serie.nome = novoNome;  
+            Series[] serie = arqSeries.readNome(nome);
+            if (serie != null) {
+                
+                for (int i=0; i < serie.length; i++) {
+                    System.out.println("\t[" + i + "]");
+                    mostraSerie(serie[i]);
                 }
 
+                System.out.print("Digite o número da série a ser atualizada: ");
+                int num = console.nextInt();
+                console.nextLine();
 
-                System.out.print("Nova sinopse (deixe em branco para manter o anterior): ");
-                String novoSinopse = console.nextLine();
-                if (!novoSinopse.isEmpty()) {
-                    Serie.sinopse = novoSinopse;  
-                }
+                //testar se o numero digitado e' valido
+                if (num >= 0 && serie[num] != null) {
 
-
-                 System.out.print("Novo stream (deixe em branco para manter o anterior): ");
-                 String novoStream = console.nextLine();
-                 if (!novoStream.isEmpty()) {
-                     Serie.stream = novoStream;  
-                 }
-
-                // Alteração de data de lancamento
-                System.out.print("Nova data de lançamento (DD/MM/AAAA) (deixe em branco para manter a anterior): ");
-                String novaDataStr = console.nextLine();
-                if (!novaDataStr.isEmpty()) {
-                    try {
-                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                        Serie.lancamento = LocalDate.parse(novaDataStr, formatter);  // Atualiza a data de lancamento se fornecida
-                    } catch (Exception e) {
-                        System.err.println("Data inválida. Valor mantido.");
+                    //------------- Dados a serem atualizados ----------------//
+                    System.out.print("Novo nome (ou Enter para manter): ");
+                    String novoNome = console.nextLine();
+                    if (!novoNome.isEmpty()) {
+                        serie[num].setNome(novoNome);
                     }
-                }
 
-                // Confirmação da alteração
-                System.out.print("\nConfirma as alterações? (S/N) ");
-                char resp = console.next().charAt(0);
-                if (resp == 'S' || resp == 's') {
-                    // Salva as alterações no arquivo
-                    boolean alterado = arqSeries.update(Serie);
-                    if (alterado) {
-                        System.out.println("Serie alterada com sucesso.");
+                    System.out.print("Novo ano de lançamento (ou Enter para manter): ");
+                    String ano = console.nextLine();
+                    if (!ano.isEmpty()) {
+                        LocalDate anoS = LocalDate.parse(ano + "-01-01"); // Apenas o ano
+                        serie[num].setAnoLancamento(anoS);
+                    }
+
+                    System.out.print("Nova sinopse (ou Enter para manter): ");
+                    String novaSinopse = console.nextLine();
+                    if (!novaSinopse.isEmpty()) {
+                        serie[num].setSinopse(novaSinopse);
+                    }
+
+                    System.out.print("Novo streaming (ou Enter para manter): ");
+                    String novoStreaming = console.nextLine();
+                    if (!novoStreaming.isEmpty()) {
+                        serie[num].setStreaming(novoStreaming);
+                    }
+
+                    System.out.print("Novo genero (ou Enter para manter): ");
+                    String novogenero = console.nextLine();
+                    if (!novoStreaming.isEmpty()) {
+                        serie[num].setGenero(novogenero);
+                    }
+
+                    System.out.print("Nova classificação indicada (ou Enter para manter): ");
+                    String novoclassind = console.nextLine();
+                    if (!novoclassind.isEmpty()) {
+                        serie[num].setClassIndicativa(novoclassind);
+                    }
+
+                    System.out.print("\nConfirma as alterações? (S/N) ");
+                    char resp = console.nextLine().charAt(0);
+
+                    if (resp == 'S' || resp == 's') {
+                        boolean alterado = arqSeries.update(serie[num]);
+                        if (alterado) {
+                            System.out.println("Série alterada com sucesso.");
+                        } else {
+                            System.out.println("Erro ao alterar a série.");
+                        }
                     } else {
-                        System.out.println("Erro ao alterar a Serie.");
+                        System.out.println("Alterações canceladas.");
                     }
                 } else {
-                    System.out.println("Alterações canceladas.");
+                    System.out.println("Não há serie associada a esse número.");
                 }
             } else {
-                System.out.println("Serie não encontrada.");
+                System.out.println("Série não encontrada.");
             }
         } catch (Exception e) {
-            System.out.println("Erro do sistema. Não foi possível alterar a Serie!");
-            e.printStackTrace();
+            System.out.println("Erro ao alterar série.");
         }
-        
     }
 
 
@@ -243,7 +249,7 @@ public class MenuSeries {
         } while (!nomeValido);
 
         try {
-            Series serie = arqSeries.read(nome);
+            Serie serie = arqSeries.readNome(nome);
             if (serie != null) {
                 System.out.println("Serie encontrada:");
 
@@ -251,7 +257,7 @@ public class MenuSeries {
                 char resp = console.nextLine().charAt(0);
 
                 if (resp == 'S' || resp == 's') {
-                    boolean excluido = arqSeries.delete(nome);  
+                    boolean excluido = arqSeries.delete(nome, serie.getId());  
                     if (excluido) {
                         System.out.println("Serie excluída com sucesso.");
                     } else {

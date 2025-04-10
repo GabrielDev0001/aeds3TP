@@ -158,6 +158,7 @@ public class MenuEpisodio {
             }
         } 
         catch (Exception e) {
+            System.out.println("Não foi possivel abrir o arquivo de series");
         }
 
            

@@ -87,7 +87,7 @@ public class ArquivoEpisodios extends Arquivo<Episodio> {
             Episodio[] episodios = new Episodio[docs.size()];
             int i = 0;
             for (ParaNomeID doc : docs) {
-                episodios[i++] = read(doc.getId);
+                episodios[i++] = read(doc.getId());
             }
 
             ArrayList<Episodio> episodiosSerie = new ArrayList<>();
@@ -120,7 +120,7 @@ public class ArquivoEpisodios extends Arquivo<Episodio> {
     }
 
     public boolean delete(String nome) throws Exception {
-        Integer id = indiceNomeEpisodio.read(nome);
+        int id = indiceNomeEpisodio.read(nome);
         
         if (id != null) {
             Episodio e = read(id);
@@ -189,5 +189,9 @@ public class ArquivoEpisodios extends Arquivo<Episodio> {
         }
         else
           return 0;
+    }
+
+    Episodio read() {
+        Episodio x;
     }
 }

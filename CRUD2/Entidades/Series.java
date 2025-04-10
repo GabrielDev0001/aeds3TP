@@ -25,7 +25,7 @@ public class Series implements Registro {
         this(-1, "", "", LocalDate.now(),"");
     }
     public Series(String n, String c, LocalDate d, String s) {
-        this(-1, n, c, s, d, s);
+        this(-1, n, s, d, s);
     }
 
     public Series(int i, String n, String c, LocalDate d, String s) {
@@ -47,6 +47,8 @@ public class Series implements Registro {
     public String getNome() {
         return nome;
     }
+
+
 
     public String toString() {
         return "\nID........: " + this.id +
