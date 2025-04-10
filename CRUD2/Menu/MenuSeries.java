@@ -180,7 +180,7 @@ public class MenuSeries {
                     String ano = console.nextLine();
                     if (!ano.isEmpty()) {
                         LocalDate anoS = LocalDate.parse(ano + "-01-01"); // Apenas o ano
-                        serie[num].setAnoLancamento(anoS);
+                        serie[num].setLancamento(anoS);
                     }
 
                     System.out.print("Nova sinopse (ou Enter para manter): ");
@@ -192,20 +192,9 @@ public class MenuSeries {
                     System.out.print("Novo streaming (ou Enter para manter): ");
                     String novoStreaming = console.nextLine();
                     if (!novoStreaming.isEmpty()) {
-                        serie[num].setStreaming(novoStreaming);
+                        serie[num].setStream(novoStreaming);
                     }
 
-                    System.out.print("Novo genero (ou Enter para manter): ");
-                    String novogenero = console.nextLine();
-                    if (!novoStreaming.isEmpty()) {
-                        serie[num].setGenero(novogenero);
-                    }
-
-                    System.out.print("Nova classificação indicada (ou Enter para manter): ");
-                    String novoclassind = console.nextLine();
-                    if (!novoclassind.isEmpty()) {
-                        serie[num].setClassIndicativa(novoclassind);
-                    }
 
                     System.out.print("\nConfirma as alterações? (S/N) ");
                     char resp = console.nextLine().charAt(0);
@@ -249,7 +238,7 @@ public class MenuSeries {
         } while (!nomeValido);
 
         try {
-            Serie serie = arqSeries.readNome(nome);
+            Series serie = arqSeries.readNome(nome);
             if (serie != null) {
                 System.out.println("Serie encontrada:");
 

@@ -1,17 +1,11 @@
 package Entidades;
-import java.time.LocalDate;
-
 import aed3.*;
-import Arquivo.*;
-import Entidades.*;
-import Menu.*;
-
-
-import java.io.IOException;
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.time.LocalDate;
 
 public class Series implements Registro {
 
@@ -42,6 +36,28 @@ public class Series implements Registro {
 
     public int getId() {
         return id;
+    }
+    public void setStream(String stream) {
+        this.stream = stream;
+    }
+    public String getStream() {
+        return stream;
+    }
+    public void setLancamento(LocalDate lancamento) {
+        this.lancamento = lancamento;
+    }
+    public LocalDate getLancamento() {
+        return lancamento;
+    }
+
+    public void setSinopse(String sinopse) {
+        this.sinopse = sinopse;
+    }
+    public String getSinopse() {
+        return sinopse;
+    }
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public String getNome() {
