@@ -1,7 +1,7 @@
 package Arquivo;
 import Entidades.*;
-import aed3.ParNomeSerieId;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import aed3.*;
@@ -15,10 +15,13 @@ public class ArquivoSeries extends Arquivo<Series> {
     public ArquivoSeries() throws Exception {
         super("series", Series.class.getConstructor());
         
-            indiceNomeSerie = new ArvoreBMais<>(
-            ParNomeSerieId.class.getConstructor(), 
-            5, 
-            "./dados/"+ arqSeries +"/indiceNomeSerie.d.db");
+       new File("./dados/series").mkdirs();
+
+    indiceNomeSerie = new ArvoreBMais<>(
+        ParNomeSerieId.class.getConstructor(), 
+        5, 
+        "./dados/series/indiceNomeSerie.d.db"
+    );
     }
 
     @Override

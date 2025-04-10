@@ -2,6 +2,7 @@ package Arquivo;
 import aed3.*;
 import Entidades.*;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class ArquivoEpisodios extends Arquivo<Episodio> {
@@ -13,16 +14,18 @@ public class ArquivoEpisodios extends Arquivo<Episodio> {
   public ArquivoEpisodios() throws Exception {
     super("episodio", Episodio.class.getConstructor());
 
+    new File("./dados/episodio").mkdirs();
+
     indiceIdEpiIdSerie = new ArvoreBMais<>(
       ParIdId.class.getConstructor(),
       5,
-      "./dados/"+ arqEpisodio +"/indiceIdEpisodios_IdSerie.db"
+      "./dados/episodio/indiceIdEpisodios_IdSerie.db"
     );
 
     indiceNomeEpisodio = new ArvoreBMais<>(
       ParNomeIdEpi.class.getConstructor(),
       5,
-      "./dados/"+ arqEpisodio +"/indiceNomeEpisodios.db"
+      "./dados/episodio/indiceNomeEpisodios.db"
     );
   }
 

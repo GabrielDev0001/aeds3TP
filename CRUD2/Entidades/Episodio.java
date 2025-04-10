@@ -27,6 +27,15 @@ public class Episodio  implements Registro{
         this.idSerie = idSerie;
     }
 
+    public Episodio() {
+        this.nome = "";
+        this.dataLancamento = LocalDate.of(1900, 1, 1);
+        this.duracao = 0.0f;
+        this.temporada = 0;
+        this.avaliacao = 0.0f;
+        this.idSerie = 0;
+    }
+
     public Episodio(int id, String nome, int temporada, LocalDate dataLancamento, float duracao) throws Exception {
         this.id = id;
         if (nome.length() > 0 && nome.length() <= 50)
