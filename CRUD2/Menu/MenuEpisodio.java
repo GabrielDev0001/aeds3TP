@@ -147,6 +147,15 @@ public class MenuEpisodio {
             for (int i = 0; i < e.length; i++) {
                 System.out.println(i + " " + e[i].getNome());
             }
+
+            int numEp = console.nextInt();
+
+            boolean excluido = arqEp.delete(e[numEp].getId());
+            if (excluido) {
+                System.out.println("Exclusão efetuada com sucesso!");
+            } else {
+                System.out.println("Exclusão não efetuada.");
+            }
         } 
         catch (Exception e) {
         }
