@@ -17,6 +17,7 @@ public static void main(String[] args) {
             System.out.println("> Início");
             System.out.println("\n1 - Séries");
             System.out.println("2 - Episódios");
+            System.out.println("3 - Episódios");
             System.out.println("0 - Sair");
 
             System.out.print("\nOpção: ");
@@ -33,6 +34,9 @@ public static void main(String[] args) {
                 case 2:
                     new MenuEpisodio().menu();
                 break;
+                case 3:
+                    new MenuAtores().menu();
+                    break;
                 case 0:
                     break;
                 default:
