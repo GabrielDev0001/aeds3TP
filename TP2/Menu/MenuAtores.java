@@ -266,16 +266,15 @@ public class MenuAtores {
         
     }
      
-    public void mostraEpisodio(Episodio Episodio) {
-        if (Episodio != null) {
-            System.out.println("\nDetalhes do Episodio:");
+    public void mostraAtores(Ator Ator) {
+        if (Ator != null) {
+            System.out.println("\nDetalhes do Ator:");
             System.out.println("----------------------");
-            System.out.printf("Nome......: %s%n", Episodio.nome);
-            System.out.printf("Duração.......: %s%n", Episodio.duracao);
-            System.out.printf("Temporada.......: %s%n", Episodio.temporada);
-            System.out.printf("Lançamento: %s%n", Episodio.dataLancamento);
-            System.out.printf("Avaliação: %s%n", Episodio.avaliacao);
-            System.out.printf("ID da Série: %s%n", Episodio.idSerie);
+            System.out.printf("Nome......: %s%n", Ator.nome);
+            System.out.printf("ID do Ator: %s%n", Ator.idAtor);
+            //Implementar chave estrangeira
+
+            //
             System.out.println("----------------------");
         }
     }
