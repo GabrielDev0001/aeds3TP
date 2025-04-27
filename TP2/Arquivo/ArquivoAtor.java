@@ -48,7 +48,7 @@ public class ArquivoAtor extends Arquivo<Ator>{
     }
 
     public boolean excluirAtor(String nome, int id) {
-
+        
     }
 
     public boolean atualizarAtor(Ator a) throws Exception {
