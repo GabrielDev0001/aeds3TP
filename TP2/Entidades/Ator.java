@@ -12,8 +12,6 @@ public class Ator implements EntidadeArquivo{
     private String nome;
     public int idSerie;
 
-    
-
     public Ator (int id, String nome, int idserie){
         this.id = id;
         this.nome = nome;

@@ -1,4 +1,4 @@
-package modelo;
+package aed3;
 
 /*
 Esta classe representa um objeto para uma entidade

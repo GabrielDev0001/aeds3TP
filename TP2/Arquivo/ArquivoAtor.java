@@ -17,7 +17,7 @@ public class ArquivoAtor extends Arquivo<Ator>{
         "./dados/" + nomeEntidade + "/indiceAtor.db");
     }
 
-    public int criarAtor (Ator a) throws Exception{
+    public int criarAtor(Ator a) throws Exception{
         int id = super.criarAtor(a);
         indiceNomeAtor.criarAtor(new ParIdAtor(a.getNome(), id));
         return id;
