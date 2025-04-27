@@ -1,8 +1,8 @@
 package Menu;
 
-import java.util.Scanner;
-import Entidades.*;
 import Arquivo.*;
+import Entidades.*;
+import java.util.Scanner;
 
 public class MenuAtores {
     ArquivoAtor arqAtor;
@@ -121,7 +121,7 @@ public class MenuAtores {
                 System.out.println(i + " " + s[i].getNome());
             }   
             int numSerie = console.nextInt();
-            Ator[] e = arqAtor.readAtoresSerie(s[numSerie].getId());
+            Ator[] e = arqAtor.readNome(nome);
 
             for (int i = 0; i < e.length; i++) {
                 System.out.println(i + " " + e[i].getNome());
@@ -161,8 +161,7 @@ public class MenuAtores {
                 System.out.println(i + " " + s[i].getNome());
             }
             System.out.println("Digite o numero: ");
-            int numSerie = console.nextInt();
-            Ator[] e = arqAtor.readAtoresSerie(s[numSerie].getId());
+            Ator[] e = arqAtor.readNome(nome);
             System.out.println("Digite o nome do Ator: ");
             String nomeEp = console.nextLine();
             boolean resp = false;
@@ -212,7 +211,7 @@ public class MenuAtores {
             System.out.println("\nDetalhes do Ator:");
             System.out.println("----------------------");
             System.out.printf("Nome......: %s%n", Ator.getNome());
-            System.out.printf("ID do Ator: %s%n", Ator.getID());
+            System.out.printf("ID do Ator: %s%n", Ator.getId());
             //Implementar chave estrangeira
 
             //
