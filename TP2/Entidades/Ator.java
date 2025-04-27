@@ -64,14 +64,4 @@ public class Ator implements Registro{
         nome = dis.readUTF();
         idSerie = dis.readInt();
     }
-    @Override
-    public void setID(int id) {
-        this.id = id;
-    }
-    @Override
-    public int getID() {
-        return this.id;
-    }
-    
-
 }
