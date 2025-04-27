@@ -1,4 +1,4 @@
-package modelo;
+package aed3;
 
 /*
 Esta classe representa um objeto para uma entidade
@@ -12,7 +12,6 @@ Implementado pelo Prof. Marcos Kutova
 v1.0 - 2024
 */
 
-import aed3.*;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
