@@ -45,8 +45,6 @@ public class ArquivoEpisodios extends Arquivo<Episodio> {
     return id;
   }
 
-
-
   public Episodio[] readNomeEpisodio(String nome) throws Exception{
     if(nome.length() == 0)
       return null;
