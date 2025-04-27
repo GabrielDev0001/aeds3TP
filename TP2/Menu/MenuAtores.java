@@ -116,7 +116,7 @@ public class MenuAtores {
         String nome = console.nextLine();
 
         try {
-            Atores[] s = arqAtores.readNome(nome);
+            Ator[] s = arqAtores.readNome(nome);
             for (int i = 0; i < s.length; i++) {
                 System.out.println(i + " " + s[i].getNome());
             }   
@@ -129,7 +129,7 @@ public class MenuAtores {
 
             int numEp = console.nextInt();
 
-            boolean excluido = arqAtor.delete(e[numEp].getId());
+            boolean excluido = arqAtor.excluirAtor(e[numEp].getId());
             if (excluido) {
                 System.out.println("Exclusão efetuada com sucesso!");
             } else {
@@ -156,7 +156,7 @@ public class MenuAtores {
         } while (!nomeValido);
 
         try {
-            Atores[] s = arqAtores.readNome(nome);
+            Ator[] s = arqAtores.readNome(nome);
             for (int i = 0; i < s.length; i++) {
                 System.out.println(i + " " + s[i].getNome());
             }
@@ -197,7 +197,7 @@ public class MenuAtores {
             }
         } while (!nomeValido);
         try {
-            Atores[] s = arqAtores.readNome(nome);
+            Ator[] s = arqAtores.readNome(nome);
             for (int i = 0; i < s.length; i++) {
                 System.out.println(i + " " + s[i].getNome());
             }
