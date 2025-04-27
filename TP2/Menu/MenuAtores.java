@@ -10,7 +10,7 @@ public class MenuAtores {
     private static Scanner console = new Scanner(System.in);
 
 
-    public MenuAtor() throws Exception {
+    public MenuAtores() throws Exception {
         arqAtor = new ArquivoAtor();
         arqAtores = new ArquivoAtor();
     }
@@ -58,12 +58,10 @@ public class MenuAtores {
         System.out.println("\nInclusão de Ator");
         String nome = "";
         int IDserie = 0;
-        boolean dadosCorretos = false;
 
-        //Descobre a serie que o usuario vai utilizar
         System.out.println("\nBusca de Ator");
         String descobre;
-        boolean nomeserieValido = false;
+        boolean nomeAtorValido = false;
      
         do {
             System.out.print("\nDigite o nome: ");
@@ -71,11 +69,11 @@ public class MenuAtores {
      
             if(descobre.isEmpty())
                 return;
-            else nomeserieValido = true;
-        } while (!nomeserieValido);
+            else nomeAtorValido = true;
+        } while (!nomeAtorValido);
      
         try {
-            Atores[] s = arqAtores.readNome(descobre);
+            Ator[] s = arqAtores.readNome(descobre);
             for (int i = 0; i < s.length; i++) {
                 System.out.println(i + " " + s[i].getNome());
             }
