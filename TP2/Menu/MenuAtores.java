@@ -101,7 +101,7 @@ public class MenuAtores {
 
                 Ator c = new Ator(nome, IDserie);
 
-                arqAtor.create(c);
+                arqAtor.criarAtor(c);
                 System.out.println("Ator incluído com sucesso.");
             } catch(Exception e) {
                 System.out.println("Erro do sistema. Não foi possível incluir o ator!");
