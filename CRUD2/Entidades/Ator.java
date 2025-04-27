@@ -1,18 +1,17 @@
 package Entidades;
 
+import aed3.EntidadeArquivo;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.time.LocalDate;
-
-import aed3.EntidadeArquivo;
-import aed3.Registro;
 
 public class Ator implements EntidadeArquivo{
     private int id;
     private String nome;
+
+    
 
     public Ator (int id, String nome){
         this.id = id;
@@ -52,6 +51,14 @@ public class Ator implements EntidadeArquivo{
 
         id = dis.readInt();
         nome = dis.readUTF();
+    }
+    @Override
+    public void setID(int id) {
+        this.id = id;
+    }
+    @Override
+    public int getID() {
+        return this.id;
     }
     
 
