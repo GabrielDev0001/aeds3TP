@@ -220,7 +220,7 @@ public class MenuAtores {
             }
 
             if(!resp) {
-                System.out.println("Ep nao encontrado");
+                System.out.println("Ator nao encontrado");
             }
     
 
