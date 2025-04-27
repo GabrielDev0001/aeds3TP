@@ -1,5 +1,14 @@
 package Entidades;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.time.LocalDate;
+
+import aed3.Registro;
+
 public class SerieAtor {
     private int idAtor;
     private int idSerie;
@@ -23,5 +32,24 @@ public class SerieAtor {
     }
     public int getIdSerie() {
         return this.idSerie;
+    }
+    public byte[] toByteArray() throws IOException {//serializa o objeto
+        // cria um ByteArrayOutputStream para armazenar os dados serializados
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        DataOutputStream dos = new DataOutputStream(baos);
+
+        dos.writeInt(idAtor);
+        dos.writeInt(idSerie);
+
+        return baos.toByteArray();
+    }
+
+    public void fromByteArray(byte[] b) throws IOException {//deserializa o objeto
+        // cria um ByteArrayInputStream para ler os dados serializados
+        ByteArrayInputStream bais = new ByteArrayInputStream(b);
+        DataInputStream dis = new DataInputStream(bais);
+
+        this.idAtor = dis.readInt();
+        this.idSerie = dis.readInt();
     }
 }
