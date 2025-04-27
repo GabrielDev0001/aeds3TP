@@ -5,27 +5,37 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.time.LocalDate;
 
 import aed3.Registro;
 
-public class SerieAtor implements Registro {
+public class SerieAtor implements Registro{
+
+    private int id;
     private int idAtor;
     private int idSerie;
+   
 
-    public SerieAtor(int idAtor, int idSerie) {
+    public SerieAtor(int id ,int idAtor, int idSerie) {
+        this.id = id;
         this.idAtor = idAtor;
         this.idSerie = idSerie;
     }
     public SerieAtor() {
+        this.id = -1;
         this.idAtor = -1;
         this.idSerie = -1;
+    }
+    public void setId(int id) {
+        this.id = id;
     }
     public void setIdAtor(int id) {
         this.idAtor = id;
     }
     public void setIdSerie(int id) {
         this.idSerie = id;
+    }
+    public int getId() {
+        return this.id;
     }
     public int getIdAtor() {
         return this.idAtor;
@@ -52,4 +62,5 @@ public class SerieAtor implements Registro {
         this.idAtor = dis.readInt();
         this.idSerie = dis.readInt();
     }
+    
 }
