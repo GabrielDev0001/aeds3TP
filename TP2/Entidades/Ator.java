@@ -10,16 +10,19 @@ import java.io.IOException;
 public class Ator implements EntidadeArquivo{
     private int id;
     private String nome;
+    public int idSerie;
 
     
 
-    public Ator (int id, String nome){
+    public Ator (int id, String nome, int idserie){
         this.id = id;
         this.nome = nome;
+        this.idSerie = idserie;
     }
     public Ator () {
         this.id = -1;
         this.nome = "";
+        this.idSerie = -1;
     }
     public void setId(int id) {
         this.id = id;
@@ -27,11 +30,17 @@ public class Ator implements EntidadeArquivo{
     public void setNome(String nome) {
         this.nome = nome;
     }
+    public void setIdSerie(int id) {
+        this.idSerie = id;
+    }
     public int getId() {
         return this.id;
     }
     public String getNome() {
         return this.nome;
+    }
+    public int getIDSerie() {
+        return this.idSerie;
     }
     public byte[] toByteArray() throws IOException {//serializa o objeto
         // cria um ByteArrayOutputStream para armazenar os dados serializados
@@ -40,6 +49,7 @@ public class Ator implements EntidadeArquivo{
 
         dos.writeInt(id);
         dos.writeUTF(nome);
+        dos.writeInt(idSerie);
        
         return baos.toByteArray();
     }
@@ -51,6 +61,7 @@ public class Ator implements EntidadeArquivo{
 
         id = dis.readInt();
         nome = dis.readUTF();
+        idSerie = dis.readInt();
     }
     @Override
     public void setID(int id) {
