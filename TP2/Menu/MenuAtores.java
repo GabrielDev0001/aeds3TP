@@ -211,8 +211,8 @@ public class MenuAtores {
         if (Ator != null) {
             System.out.println("\nDetalhes do Ator:");
             System.out.println("----------------------");
-            System.out.printf("Nome......: %s%n", Ator.nome);
-            System.out.printf("ID do Ator: %s%n", Ator.idAtor);
+            System.out.printf("Nome......: %s%n", Ator.getNome());
+            System.out.printf("ID do Ator: %s%n", Ator.getID());
             //Implementar chave estrangeira
 
             //
