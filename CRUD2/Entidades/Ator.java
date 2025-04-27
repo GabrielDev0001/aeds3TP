@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.time.LocalDate;
 
 import aed3;
+import aed3.EntidadeArquivo;
+
 
 public class Ator implements EntidadeArquivo{
     private int id;
