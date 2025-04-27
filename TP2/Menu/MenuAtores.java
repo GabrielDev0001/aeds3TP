@@ -7,14 +7,14 @@ import java.time.format.DateTimeFormatter;
 import Arquivo.*;
 
 public class MenuAtores {
-    ArquivoEpisodios arqEp;
-    ArquivoSeries arqSeries;
+    ArquivoAtores arqAtor;
+    ArquivoAtores arqAtores;
     private static Scanner console = new Scanner(System.in);
 
 
-    public MenuEpisodio() throws Exception {
-        arqEp = new ArquivoEpisodios();
-        arqSeries = new ArquivoSeries();
+    public MenuAtor() throws Exception {
+        arqAtor = new ArquivoAtores();
+        arqAtores = new ArquivoAtores();
     }
 
     public void menu() {
@@ -22,7 +22,7 @@ public class MenuAtores {
         do {
             System.out.println("PUCFlix 1.0");
             System.out.println("----------");
-            System.out.println("> Início > Episódios");
+            System.out.println("> Início > Atores");
             System.out.println("\n1) Incluir");
             System.out.println("2) Buscar");
             System.out.println("3) Alterar");
@@ -37,16 +37,16 @@ public class MenuAtores {
             }
             switch(opcao) {
                 case 1: 
-                    incluirEpisodio();
+                    incluirAtor();
                     break;
                 case 2: 
-                    buscarEpisodio();
+                    buscarAtor();
                     break;
                 case 3: 
-                    alterarEpisodio();
+                    alterarAtor();
                     break;
                 case 4: 
-                    excluirEpisodio();
+                    excluirAtor();
                     break;
                 case 0:
                     break;
@@ -56,8 +56,8 @@ public class MenuAtores {
         } while (opcao != 0);
     }
 
-    public void incluirEpisodio() {
-        System.out.println("\nInclusão de Episodio");
+    public void incluirAtor() {
+        System.out.println("\nInclusão de Ator");
         String nome = "";
         float duracao = 0;
         float avaliacao = 0;
@@ -82,7 +82,7 @@ public class MenuAtores {
         } while (!nomeserieValido);
      
         try {
-            Series[] s = arqSeries.readNome(descobre);
+            Atores[] s = arqAtores.readNome(descobre);
             for (int i = 0; i < s.length; i++) {
                 System.out.println(i + " " + s[i].getNome());
             }
@@ -100,7 +100,7 @@ public class MenuAtores {
             if(nome.length()==0)
                 return;
             if(nome.length()<4)
-                System.err.println("O nome do Episodio deve ter no mínimo 4 caracteres.");
+                System.err.println("O nome do Ator deve ter no mínimo 4 caracteres.");
         } while(nome.length()<4);
 
         do {
@@ -141,9 +141,9 @@ public class MenuAtores {
         if(resp=='S' || resp=='s') {
             try {
 
-                Episodio c = new Episodio(nome, dataLancamento, avaliacao, duracao ,temporada, IDserie);
+                Ator c = new Ator(nome, dataLancamento, avaliacao, duracao ,temporada, IDserie);
 
-                arqEp.create(c);
+                arqAtor.create(c);
                 System.out.println("Série incluída com sucesso.");
             } catch(Exception e) {
                 System.out.println("Erro do sistema. Não foi possível incluir a Série!");
@@ -151,20 +151,20 @@ public class MenuAtores {
         }
     }
 
-    public void excluirEpisodio() {
-        System.out.println("\nExclusão do Episodio");
+    public void excluirAtor() {
+        System.out.println("\nExclusão do Ator");
       //  boolean nomeValido = false;
         System.out.print("\nDigite o nome da série: ");
 
         String nome = console.nextLine();
 
         try {
-            Series[] s = arqSeries.readNome(nome);
+            Atores[] s = arqAtores.readNome(nome);
             for (int i = 0; i < s.length; i++) {
                 System.out.println(i + " " + s[i].getNome());
             }   
             int numSerie = console.nextInt();
-            Episodio[] e = arqEp.readEpisodiosSerie(s[numSerie].getId());
+            Ator[] e = arqAtor.readAtoresSerie(s[numSerie].getId());
 
             for (int i = 0; i < e.length; i++) {
                 System.out.println(i + " " + e[i].getNome());
@@ -172,7 +172,7 @@ public class MenuAtores {
 
             int numEp = console.nextInt();
 
-            boolean excluido = arqEp.delete(e[numEp].getId());
+            boolean excluido = arqAtor.delete(e[numEp].getId());
             if (excluido) {
                 System.out.println("Exclusão efetuada com sucesso!");
             } else {
@@ -180,13 +180,13 @@ public class MenuAtores {
             }
         } 
         catch (Exception e) {
-            System.out.println("Não foi possivel abrir o arquivo de series");
+            System.out.println("Não foi possivel abrir o arquivo de Atores");
         }
 
            
     }
 
-    public void buscarEpisodio() {
+    public void buscarAtor() {
         System.out.println("\nBusca de Série");
         String nome;
         boolean nomeValido = false;
@@ -201,40 +201,40 @@ public class MenuAtores {
         } while (!nomeValido);
 
         try {
-            Series[] s = arqSeries.readNome(nome);
+            Atores[] s = arqAtores.readNome(nome);
             for (int i = 0; i < s.length; i++) {
                 System.out.println(i + " " + s[i].getNome());
             }
             System.out.println("Digite o numero: ");
             int numSerie = console.nextInt();
-            Episodio[] e = arqEp.readEpisodiosSerie(s[numSerie].getId());
-            System.out.println("Digite o nome do episodio: ");
+            Ator[] e = arqAtor.readAtoresSerie(s[numSerie].getId());
+            System.out.println("Digite o nome do Ator: ");
             String nomeEp = console.nextLine();
             boolean resp = false;
             for(int i = 0; i < e.length; i++) {
                 if (e[i].getNome().equals(nomeEp)) {
-                    System.out.println("Episodio encontrado!");
+                    System.out.println("Ator encontrado!");
                     resp = true;
                     break;
                 }
             }
 
             if(!resp) {
-                System.out.println("Ep nao encontrado");
+                System.out.println("Ator nao encontrado");
             }
     
 
 
         } catch(Exception e) {
-            System.out.println("Erro do sistema. Não foi possível buscar o Episodio!");
+            System.out.println("Erro do sistema. Não foi possível buscar o Ator!");
             e.printStackTrace();
         }
     } 
 
 
 
-    public void alterarEpisodio() {
-        System.out.println("\nAlteração do Episodio");
+    public void alterarAtor() {
+        System.out.println("\nAlteração do Ator");
         String nome;
         boolean nomeValido = false;
 
@@ -251,7 +251,7 @@ public class MenuAtores {
 
 
         try {
-            Series[] s = arqSeries.readNome(nome);
+            Atores[] s = arqAtores.readNome(nome);
             for (int i = 0; i < s.length; i++) {
                 System.out.println(i + " " + s[i].getNome());
             }
@@ -260,7 +260,7 @@ public class MenuAtores {
 
 
         } catch (Exception e) {
-            System.out.println("Erro do sistema. Não foi possível alterar o Episodio!");
+            System.out.println("Erro do sistema. Não foi possível alterar o Ator!");
             e.printStackTrace();
         }
         
