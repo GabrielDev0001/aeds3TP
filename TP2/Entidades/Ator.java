@@ -7,7 +7,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-public class Ator implements EntidadeArquivo{
+public class Ator implements Registro{
     private int id;
     private String nome;
     public int idSerie;
