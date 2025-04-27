@@ -17,7 +17,7 @@ public static void main(String[] args) {
             System.out.println("> Início");
             System.out.println("\n1 - Séries");
             System.out.println("2 - Episódios");
-            System.out.println("3 - Episódios");
+            System.out.println("3 - Atores");
             System.out.println("0 - Sair");
 
             System.out.print("\nOpção: ");
