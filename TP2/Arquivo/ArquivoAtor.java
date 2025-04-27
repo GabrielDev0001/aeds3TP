@@ -48,7 +48,27 @@ public class ArquivoAtor extends Arquivo<Ator>{
     }
 
     public boolean excluirAtor(String nome, int id) {
-        
+
+    }
+
+    public boolean atualizarAtor(Ator a) throws Exception {
+        Ator ator = readNome(a.getId());
+        if(super.atualizarAtor(a)) {
+            if(!ator.getNome().equals(a.getNome())) {
+                indiceNomeAtor.excluirAtor(new ParIdAtor(ator.getNome(), ator.getId()));
+                indiceNomeAtor.criarAtor(new ParIdAtor(a.getNome(), ator.getId()));
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public boolean atorExiste(int id) throws Exception{
+        Ator a = readNome(id);
+        if(a) {
+            return true;
+        }
+        return false;
     }
 
 }
