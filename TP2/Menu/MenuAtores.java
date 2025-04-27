@@ -59,16 +59,11 @@ public class MenuAtores {
     public void incluirAtor() {
         System.out.println("\nInclusão de Ator");
         String nome = "";
-        float duracao = 0;
-        float avaliacao = 0;
-        LocalDate dataLancamento = null;
-        int temporada = 0;
         int IDserie = 0;
         boolean dadosCorretos = false;
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
         //Descobre a serie que o usuario vai utilizar
-        System.out.println("\nBusca de Série");
+        System.out.println("\nBusca de Ator");
         String descobre;
         boolean nomeserieValido = false;
      
@@ -90,7 +85,7 @@ public class MenuAtores {
             int numSerie = console.nextInt();
             IDserie = s[numSerie].getId();
         }catch (Exception e) {
-            System.out.println("Erro ao buscar a série: " + e.getMessage());
+            System.out.println("Erro ao buscar a Ator: " + e.getMessage());
         }
      
 
@@ -103,58 +98,24 @@ public class MenuAtores {
                 System.err.println("O nome do Ator deve ter no mínimo 4 caracteres.");
         } while(nome.length()<4);
 
-        do {
-            System.out.print("Duração: ");
-            duracao = console.nextFloat();
-            if(duracao == 0)
-                System.err.println("a duração deve ser maior que 0.");
-        } while(duracao == 0);
-
-        do {
-            System.out.print("Temporada: ");
-            temporada = console.nextInt();
-            if(temporada ==0)
-                System.err.println("Por favor, informe a temporada do Episódio.");
-        } while(temporada ==0);
-
-        do {
-            System.out.print("Avaliação: ");
-            avaliacao = console.nextFloat();
-            if(avaliacao==0)
-                System.err.println("Por favor, informe a avaliação do Episódio.");
-        } while(avaliacao==0);
-
-        do {
-            System.out.print("Data de lançamento (DD/MM/AAAA): ");
-            String dataStr = console.nextLine();
-            dadosCorretos = false;
-            try {
-                dataLancamento = LocalDate.parse(dataStr, formatter);
-                dadosCorretos = true;
-            } catch (Exception e) {
-                System.err.println("Data inválida! Use o formato DD/MM/AAAA.");
-            }
-        } while(!dadosCorretos);
-
-        System.out.print("\nConfirma a inclusão do Episódio? (S/N) ");
+        System.out.print("\nConfirma a inclusão do Ator? (S/N) ");
         char resp = console.nextLine().charAt(0);
         if(resp=='S' || resp=='s') {
             try {
 
-                Ator c = new Ator(nome, dataLancamento, avaliacao, duracao ,temporada, IDserie);
+                Ator c = new Ator(nome, IDserie);
 
                 arqAtor.create(c);
-                System.out.println("Série incluída com sucesso.");
+                System.out.println("Ator incluído com sucesso.");
             } catch(Exception e) {
-                System.out.println("Erro do sistema. Não foi possível incluir a Série!");
+                System.out.println("Erro do sistema. Não foi possível incluir o ator!");
             }
         }
     }
 
     public void excluirAtor() {
         System.out.println("\nExclusão do Ator");
-      //  boolean nomeValido = false;
-        System.out.print("\nDigite o nome da série: ");
+        System.out.print("\nDigite o nome da Ator: ");
 
         String nome = console.nextLine();
 
@@ -181,13 +142,11 @@ public class MenuAtores {
         } 
         catch (Exception e) {
             System.out.println("Não foi possivel abrir o arquivo de Atores");
-        }
-
-           
+        }  
     }
 
     public void buscarAtor() {
-        System.out.println("\nBusca de Série");
+        System.out.println("\nBusca de Ator");
         String nome;
         boolean nomeValido = false;
 
@@ -222,48 +181,34 @@ public class MenuAtores {
             if(!resp) {
                 System.out.println("Ator nao encontrado");
             }
-    
-
-
         } catch(Exception e) {
             System.out.println("Erro do sistema. Não foi possível buscar o Ator!");
             e.printStackTrace();
         }
     } 
 
-
-
     public void alterarAtor() {
         System.out.println("\nAlteração do Ator");
         String nome;
         boolean nomeValido = false;
-
         do {
-            System.out.print("\nnome da série: ");
+            System.out.print("\nnome da Ator: ");
             nome = console.nextLine();  
-
             if(nome.isEmpty())
                 return; 
             else {
                 nomeValido = true;
             }
         } while (!nomeValido);
-
-
         try {
             Atores[] s = arqAtores.readNome(nome);
             for (int i = 0; i < s.length; i++) {
                 System.out.println(i + " " + s[i].getNome());
             }
-        //    int numSerie = console.nextInt();
-            
-
-
         } catch (Exception e) {
             System.out.println("Erro do sistema. Não foi possível alterar o Ator!");
             e.printStackTrace();
         }
-        
     }
      
     public void mostraAtores(Ator Ator) {
