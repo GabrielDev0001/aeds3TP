@@ -14,6 +14,8 @@ public class Ator implements Registro{
 
     public Ator (int id, String nome, int idserie){
         this.id = id;
+        this.idSerie = idserie;
+        this.nome = nome;
     }
 
     public Ator (String nome, int idserie){
