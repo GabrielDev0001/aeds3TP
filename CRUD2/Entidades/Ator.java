@@ -9,7 +9,7 @@ import java.time.LocalDate;
 
 import aed3.Registro;
 
-public class Ator {
+public class Ator implements EntidadeArquivo{
     private int id;
     private String nome;
 
@@ -33,5 +33,25 @@ public class Ator {
     public String getNome() {
         return this.nome;
     }
+    public byte[] toByteArray() throws IOException {//serializa o objeto
+        // cria um ByteArrayOutputStream para armazenar os dados serializados
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        DataOutputStream dos = new DataOutputStream(baos);
+
+        dos.writeInt(id);
+        dos.writeUTF(nome);
+       
+        return baos.toByteArray();
+    }
+
+    public void fromByteArray(byte[] b) throws IOException {//deserializa o objeto
+        // cria um ByteArrayInputStream para ler os dados serializados
+        ByteArrayInputStream bais = new ByteArrayInputStream(b);
+        DataInputStream dis = new DataInputStream(bais);
+
+        id = dis.readInt();
+        nome = dis.readUTF();
+    }
+    
 
 }
