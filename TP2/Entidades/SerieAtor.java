@@ -1,6 +1,5 @@
 package Entidades;
 
-import aed3.EntidadeArquivo;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
@@ -10,7 +9,7 @@ import java.time.LocalDate;
 
 import aed3.Registro;
 
-public class SerieAtor implements EntidadeArquivo{
+public class SerieAtor implements Registro {
     private int idAtor;
     private int idSerie;
 
