@@ -29,7 +29,7 @@ public class MenuAtores {
 
             System.out.print("\nOpção: ");
             try {
-                opcao = Integer.valueOf(console.nextLine());
+                opcao = console.nextInt();
             } catch(NumberFormatException e) {
                 opcao = -1;
             }
@@ -61,7 +61,7 @@ public class MenuAtores {
 
         System.out.println("\nBusca de Ator");
         String descobre;
-        boolean nomeAtorValido = false;
+        boolean nomeAtorValido;
      
         do {
             System.out.print("\nDigite o nome: ");
@@ -119,8 +119,7 @@ public class MenuAtores {
             Ator[] s = arqAtores.readNome(nome);
             for (int i = 0; i < s.length; i++) {
                 System.out.println(i + " " + s[i].getNome());
-            }   
-            int numSerie = console.nextInt();
+            }
             Ator[] e = arqAtor.readNome(nome);
 
             for (int i = 0; i < e.length; i++) {
@@ -144,7 +143,7 @@ public class MenuAtores {
     public void buscarAtor() {
         System.out.println("\nBusca de Ator");
         String nome;
-        boolean nomeValido = false;
+        boolean nomeValido;
 
         do {
             System.out.print("\nDigite o nome: ");
@@ -185,7 +184,7 @@ public class MenuAtores {
     public void alterarAtor() {
         System.out.println("\nAlteração do Ator");
         String nome;
-        boolean nomeValido = false;
+        boolean nomeValido;
         do {
             System.out.print("\nnome da Ator: ");
             nome = console.nextLine();  
