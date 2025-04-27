@@ -5,31 +5,30 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-
 import aed3.Registro;
 
-public class SerieAtor implements Registro{
-
+public class Ator implements Registro{
     private int id;
-    private int idAtor;
-    private int idSerie;
-   
+    private String nome;
+    public int idSerie;
 
-    public SerieAtor(int id ,int idAtor, int idSerie) {
+    
+
+    public Ator (int id, String nome, int idserie){
         this.id = id;
-        this.idAtor = idAtor;
-        this.idSerie = idSerie;
+        this.nome = nome;
+        this.idSerie = idserie;
     }
-    public SerieAtor() {
+    public Ator () {
         this.id = -1;
-        this.idAtor = -1;
+        this.nome = "";
         this.idSerie = -1;
     }
     public void setId(int id) {
         this.id = id;
     }
-    public void setIdAtor(int id) {
-        this.idAtor = id;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
     public void setIdSerie(int id) {
         this.idSerie = id;
@@ -37,10 +36,10 @@ public class SerieAtor implements Registro{
     public int getId() {
         return this.id;
     }
-    public int getIdAtor() {
-        return this.idAtor;
+    public String getNome() {
+        return this.nome;
     }
-    public int getIdSerie() {
+    public int getIDSerie() {
         return this.idSerie;
     }
     public byte[] toByteArray() throws IOException {//serializa o objeto
@@ -48,9 +47,10 @@ public class SerieAtor implements Registro{
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         DataOutputStream dos = new DataOutputStream(baos);
 
-        dos.writeInt(idAtor);
+        dos.writeInt(id);
+        dos.writeUTF(nome);
         dos.writeInt(idSerie);
-
+       
         return baos.toByteArray();
     }
 
@@ -59,8 +59,9 @@ public class SerieAtor implements Registro{
         ByteArrayInputStream bais = new ByteArrayInputStream(b);
         DataInputStream dis = new DataInputStream(bais);
 
-        this.idAtor = dis.readInt();
-        this.idSerie = dis.readInt();
+        id = dis.readInt();
+        nome = dis.readUTF();
+        idSerie = dis.readInt();
     }
-    
+
 }

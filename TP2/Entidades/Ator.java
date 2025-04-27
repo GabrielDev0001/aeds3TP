@@ -1,13 +1,13 @@
 package Entidades;
 
-import aed3.EntidadeArquivo;
+import aed3.Registro;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-public class Ator implements Registro{
+public class Ator implements Registro {
     private int id;
     private String nome;
     public int idSerie;
@@ -21,7 +21,8 @@ public class Ator implements Registro{
     public Ator (String nome, int idserie){
         this.nome = nome;
         this.idSerie = idserie;
-    }
+        this.id = -1;
+    } 
     public Ator () {
         this.id = -1;
         this.nome = "";
