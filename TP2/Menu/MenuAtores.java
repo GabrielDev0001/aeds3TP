@@ -11,8 +11,8 @@ public class MenuAtores {
 
 
     public MenuAtor() throws Exception {
-        arqAtor = new ArquivoAtores();
-        arqAtores = new ArquivoAtores();
+        arqAtor = new ArquivoAtor();
+        arqAtores = new ArquivoAtor();
     }
 
     public void menu() {
