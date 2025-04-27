@@ -1,14 +1,12 @@
 package Menu;
 
-import java.time.LocalDate;
 import java.util.Scanner;
 import Entidades.*;
-import java.time.format.DateTimeFormatter;
 import Arquivo.*;
 
 public class MenuAtores {
-    ArquivoAtores arqAtor;
-    ArquivoAtores arqAtores;
+    ArquivoAtor arqAtor;
+    ArquivoAtor arqAtores;
     private static Scanner console = new Scanner(System.in);
 
 
