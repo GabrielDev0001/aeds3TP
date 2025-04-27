@@ -7,6 +7,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.time.LocalDate;
 
+import aed3.EntidadeArquivo;
 import aed3.Registro;
 
 public class Ator implements EntidadeArquivo{
