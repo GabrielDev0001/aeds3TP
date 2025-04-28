@@ -6,13 +6,11 @@ import java.util.Scanner;
 
 public class MenuAtores {
     ArquivoAtor arqAtor;
-    ArquivoAtor arqAtores;
     private static Scanner console = new Scanner(System.in);
 
 
     public MenuAtores() throws Exception {
         arqAtor = new ArquivoAtor();
-        arqAtores = new ArquivoAtor();
     }
 
     public void menu() {
@@ -73,7 +71,7 @@ public class MenuAtores {
         } while (!nomeAtorValido);
      
         try {
-            Ator[] s = arqAtores.readNome(descobre);
+            Ator[] s = arqAtor.readNome(descobre);
             for (int i = 0; i < s.length; i++) {
                 System.out.println(i + " " + s[i].getNome());
             }
@@ -116,7 +114,7 @@ public class MenuAtores {
         String nome = console.nextLine();
 
         try {
-            Ator[] s = arqAtores.readNome(nome);
+            Ator[] s = arqAtor.readNome(nome);
             for (int i = 0; i < s.length; i++) {
                 System.out.println(i + " " + s[i].getNome());
             }
@@ -155,7 +153,7 @@ public class MenuAtores {
         } while (!nomeValido);
 
         try {
-            Ator[] s = arqAtores.readNome(nome);
+            Ator[] s = arqAtor.readNome(nome);
             for (int i = 0; i < s.length; i++) {
                 System.out.println(i + " " + s[i].getNome());
             }
@@ -195,7 +193,7 @@ public class MenuAtores {
             }
         } while (!nomeValido);
         try {
-            Ator[] s = arqAtores.readNome(nome);
+            Ator[] s = arqAtor.readNome(nome);
             for (int i = 0; i < s.length; i++) {
                 System.out.println(i + " " + s[i].getNome());
             }
