@@ -9,7 +9,7 @@ import java.time.LocalDate;
 
 import aed3.Registro;
 
-public class Episodio  implements Registro{
+public class Episodio implements Registro{
     public int id;
     public String nome;
     public float duracao; 
