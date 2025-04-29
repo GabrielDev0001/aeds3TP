@@ -75,7 +75,7 @@ public class ParIdAtor implements RegistroArvoreBMais<ParIdAtor> {
     }
 
     public int getId() {
-        return id;
+        return this.id;
     }
 
     @Override
