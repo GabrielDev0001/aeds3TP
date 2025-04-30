@@ -11,6 +11,8 @@ public class ArquivoSeries extends Arquivo<Series> {
     Arquivo<Series> arqSeries;
     ArvoreBMais<ParNomeSerieId> indiceNomeSerie;
     ArvoreBMais <ParIdId> indices;
+    ArvoreBMais<ParIdId> indiceIdAtor_IdSerie;
+    ArvoreBMais<ParIdId> indiceIdSerie_IdAtor;
 
     public ArquivoSeries() throws Exception {
         super("series", Series.class.getConstructor());
@@ -22,12 +24,25 @@ public class ArquivoSeries extends Arquivo<Series> {
         5, 
         "./dados/series/indiceNomeSerie.d.db"
     );
+    indiceIdAtor_IdSerie = new ArvoreBMais<>(
+        ParIdId.class.getConstructor(),
+        5,
+        "./dados/episodio/indiceIdEpisodios_IdSerie.db"
+      );
+    indiceIdSerie_IdAtor = new ArvoreBMais<>(
+        ParIdId.class.getConstructor(),
+        5,
+        "./dados/episodio/indiceIdEpisodios_IdSerie.db"
+      );
+    
     }
 
     @Override
     public int create(Series s) throws Exception {
         int id = super.create(s);
         indiceNomeSerie.create(new ParNomeSerieId(s.getNome(), id));
+        indiceIdAtor_IdSerie.create(new ParIdId(-1 , id));
+        indiceIdSerie_IdAtor.create(new ParIdId(id , -1));
         return id;
     }
  
@@ -53,8 +68,11 @@ public class ArquivoSeries extends Arquivo<Series> {
     public boolean delete(int id) throws Exception {
         Series s = read(id);   // na superclasse
         if(s!=null) {
-            if(super.delete(id))
-                return indiceNomeSerie.delete(new ParNomeSerieId(s.getNome(), id));
+            if(super.delete(id)){
+                indiceNomeSerie.delete(new ParNomeSerieId(s.getNome(), id));
+                return true;
+            }
+               
         }
         return false;
     }
@@ -103,6 +121,24 @@ public class ArquivoSeries extends Arquivo<Series> {
         }
         return false;
     }
+
+    public boolean updateAtor(Series novaSerie, Ator ator) throws Exception {
+        Series s = read(novaSerie.getId());    // na superclasse
+        int a = ator.id;
+        if(s!=null) {
+            if(super.update(novaSerie)) {
+                if(!s.getNome().equals(novaSerie.getNome())) {
+                    indiceIdAtor_IdSerie.delete(new ParIdId(a, s.getId()));
+                    indiceIdAtor_IdSerie.create(new ParIdId(a, s.getId()));
+                    indiceIdSerie_IdAtor.delete(new ParIdId(s.getId(), a));
+                    indiceIdSerie_IdAtor.create(new ParIdId(s.getId(), a));
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     //metodo para testar se ha serie vinculada ao id buscado
     public static boolean serieExiste(int id) throws Exception{

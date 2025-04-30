@@ -8,8 +8,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 
 public class Ator implements Registro {
-    private int id;
-    private String nome;
+    public int id;
+    public String nome;
     public int idSerie;
 
     public Ator (String nome, int idserie){

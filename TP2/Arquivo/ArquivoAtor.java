@@ -6,19 +6,12 @@ import java.io.File;
 import java.util.ArrayList;
 
 public class ArquivoAtor extends Arquivo<Ator>{
-    ArvoreBMais <ParIdId> indiceIdAtor;
     ArvoreBMais <ParIdAtor> indiceNomeAtor;
 
     public ArquivoAtor() throws Exception {
     super("ator", Ator.class.getConstructor());
 
     new File("./dados/ator").mkdirs();
-
-    indiceIdAtor = new ArvoreBMais<>(
-      ParIdId.class.getConstructor(),
-      5,
-      "./dados/Atores/ator.db"
-    );
 
     indiceNomeAtor = new ArvoreBMais<>(
       ParIdAtor.class.getConstructor(),

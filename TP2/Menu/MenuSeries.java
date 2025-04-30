@@ -10,6 +10,7 @@ import Entidades.*;
 public class MenuSeries {
     
     ArquivoSeries arqSeries;
+    ArquivoAtor arqAtores;
     private static Scanner console = new Scanner(System.in);
 
     public MenuSeries() throws Exception {
@@ -27,6 +28,7 @@ public class MenuSeries {
             System.out.println("2 - Incluir");
             System.out.println("3 - Alterar");
             System.out.println("4 - Excluir");
+            System.out.println("5 - Incluir Atores");
             System.out.println("0 - Voltar ao menu anterior");
 
             System.out.print("\nOpção: ");
@@ -48,6 +50,9 @@ public class MenuSeries {
                     break;
                 case 4:
                     excluirSerie();
+                    break;
+                case 5:
+                    updateAtor();
                     break;
                 case 0:
                     break;
@@ -266,6 +271,58 @@ public class MenuSeries {
             e.printStackTrace();
         }
     }
+    public void updateAtor() {
+        System.out.println("\nAlteração de Série");
+
+        System.out.print("Nome da Série: ");
+        String nome = console.nextLine();
+        System.out.println();
+
+        try {
+            Series[] serie = arqSeries.readNome(nome);
+            if (serie != null) {
+                
+                for (int i=0; i < serie.length; i++) {
+                    System.out.println("\t[" + i + "]");
+                    mostraSerie(serie[i]);
+                }
+
+                System.out.print("Digite o número da série a ser atualizada: ");
+                int num = console.nextInt();
+                console.nextLine();
+
+                //testar se o numero digitado e' valido
+                if (num >= 0 && serie[num] != null) {
+                    System.out.print("Nome do Ator: ");
+                    String nomes = console.nextLine();
+                    System.out.println();
+                    Ator[] ator = arqAtores.readNome(nomes);
+                    if (ator != null) {
+                
+                            for (int i=0; i < ator.length; i++) {
+                                System.out.println("\t[" + i + "]");
+                                System.out.println(ator[i].nome);
+                            }
+                            System.out.print("Digite o número do ator a ser inserido: ");
+                            int numa = console.nextInt();
+                            console.nextLine();
+                        if (numa >= 0 && serie[num] != null) {
+                            boolean alterado = arqSeries.updateAtor(serie[num], ator[numa]);
+                            if (alterado) {
+                                System.out.println("Série alterada com sucesso.");
+                            } else {
+                                System.out.println("Erro ao alterar a série.");
+                            }
+                        }
+                        }
+                }
+            }
+                
+        } catch (Exception e) {
+            System.out.println("Erro ao alterar série.");
+        }
+    }
+    
 
 
     public void mostraSerie(Series Serie) {
