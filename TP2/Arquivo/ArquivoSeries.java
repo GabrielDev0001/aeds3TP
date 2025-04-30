@@ -63,6 +63,23 @@ public class ArquivoSeries extends Arquivo<Series> {
             return null;
     }
 
+    public Series[] readAtoSeries(int id) throws Exception {
+        if(id < 0)
+            return null;
+            
+        ArrayList<ParIdId> ptis = indiceIdAtor_IdSerie.read(new ParIdId(id, -1));
+        if(ptis.size()>0) {
+            Series[] series = new Series[ptis.size()];
+            int i=0;
+            
+            for(ParIdId pti: ptis) 
+                series[i++] = read(pti.getId_agregado());
+            return series;
+        }
+        else 
+            return null;
+    }
+
 
     @Override
     public boolean delete(int id) throws Exception {

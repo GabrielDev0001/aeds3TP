@@ -15,6 +15,7 @@ public class MenuSeries {
 
     public MenuSeries() throws Exception {
         arqSeries = new ArquivoSeries();
+        arqAtores = new ArquivoAtor();
     }
 
     public void menu() {

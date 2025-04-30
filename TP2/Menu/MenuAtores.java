@@ -6,11 +6,13 @@ import java.util.Scanner;
 
 public class MenuAtores {
     ArquivoAtor arqAtor;
+    ArquivoSeries arqSeries;
     private static Scanner console = new Scanner(System.in);
 
 
     public MenuAtores() throws Exception {
         arqAtor = new ArquivoAtor();
+        arqSeries = new ArquivoSeries();
     }
 
     public void menu() {
@@ -20,7 +22,7 @@ public class MenuAtores {
             System.out.println("----------");
             System.out.println("> Início > Atores");
             System.out.println("\n1) Incluir");
-            System.out.println("2) Buscar");
+            System.out.println("2) Ver Series feitas");
             System.out.println("3) Alterar");
             System.out.println("4) Excluir");
             System.out.println("0) Voltar ao menu anterior");
@@ -155,24 +157,19 @@ public class MenuAtores {
         try {
             Ator[] s = arqAtor.readNome(nome);
             for (int i = 0; i < s.length; i++) {
-                System.out.println(i + " " + s[i].getNome());
+                int d = i+1;
+                System.out.println(d + " " + s[i].getNome());
             }
-            System.out.println("Digite o numero: ");
-            Ator[] e = arqAtor.readNome(nome);
-            System.out.println("Digite o nome do Ator: ");
-            String nomeEp = console.nextLine();
-            boolean resp = false;
-            for(int i = 0; i < e.length; i++) {
-                if (e[i].getNome().equals(nomeEp)) {
-                    System.out.println("Ator encontrado!");
-                    resp = true;
-                    break;
+            System.out.println("Digite o numero(Digite 0 caso não esteja na lista): ");
+            int num = console.nextInt();
+            console.nextLine();
+            if (num >= 0 && s[num] != null) {
+                Series[] d = arqSeries.readAtoSeries(num);
+                for (int i = 0; i < d.length; i++) {
+                    System.out.println(i + " " + s[i].getNome());
                 }
             }
 
-            if(!resp) {
-                System.out.println("Ator nao encontrado");
-            }
         } catch(Exception e) {
             System.out.println("Erro do sistema. Não foi possível buscar o Ator!");
             e.printStackTrace();
