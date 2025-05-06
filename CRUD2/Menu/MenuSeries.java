@@ -113,19 +113,22 @@ public class MenuSeries {
                 System.err.println("O nome da Serie deve ter no mínimo 4 caracteres.");
         } while(nome.length()<4);
 
+        int tam;
         do {
             System.out.print("Sinopse: ");
+            
             sinopse = console.nextLine();
-            if(sinopse.length()!=0)
-                System.err.println("a sinopse deve conter pelo menos um caracter.");
-        } while(sinopse.length()!=0);
+            tam = sinopse.length();
+            if(tam == 0)
+                System.err.println("A sinopse deve conter pelo menos um caracter.");
+        } while(tam == 0);
 
         do {
             System.out.print("Stream: ");
             stream = console.nextLine();
-            if(stream.length()!=0)
+            if(stream.length()==0)
                 System.err.println("Porfavor, informe onde se encontra a série.");
-        } while(stream.length()!=0);
+        } while(stream.length()==0);
 
         do {
             System.out.print("Data de lançamento (DD/MM/AAAA): ");
