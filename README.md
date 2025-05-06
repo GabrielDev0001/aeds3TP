@@ -55,16 +55,15 @@ A implementação das **Árvores B+** e da **Tabela Hash Extensível** foi um de
 O projeto segue o padrão arquitetural **MVC (Model-View-Controller)**, promovendo a separação de responsabilidades e facilitando a manutenção.
 
 ## ✅ Checklist de Funcionalidades
-- [x] As operações de inclusão, busca, alteração e exclusão de atores estão implementadas e funcionando corretamente?
-- [x] O relacionamento entre séries e atores foi implementado com árvores B+ e funciona corretamente, assegurando a consistência entre as duas entidades?
-- [x] É possível consultar quais são os atores de uma série?
-- [x] É posssível consultar quais são as séries de um ator?
-- [x] A remoção de séries remove os seus vínculos de atores?
-- [x] A inclusão de um ator em uma série em um episódio se limita aos atores existentes?
-- [x] A remoção de um ator checa se há alguma série vinculado a ele?
-- [x] O trabalho está funcionando corretamente?
-- [x] O trabalho está completo?
-- [x] O trabalho é original e não a cópia de um trabalho de outro grupo?
+- [x] CRUD completo para séries e episódios
+- [x] Relacionamento 1:N garantido entre séries e episódios
+- [x] Implementação de Árvores B+ para vinculação
+- [x] Uso de Tabela Hash Extensível para índice direto
+- [x] Exclusão de séries condicionada à ausência de episódios vinculados
+- [x] Inclusão de episódio restrita a séries existentes
+- [x] Visualização por temporada
+- [x] Testes concluídos e verificação de funcionamento
+- [x] Projeto original e completo
 
 ## 📝 Desafios Encontrados
 - Gabriel Henrique: Implementar a Hash, junto com a programação em Java, a qual não praticava a tempos. 
